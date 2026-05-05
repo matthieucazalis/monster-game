@@ -16,6 +16,7 @@ export interface UserRow extends RowDataPacket {
   role: string;
   coins: number;
   created_at: Date;
+  is_first_login: boolean;
 }
 
 export interface MonsterRow extends RowDataPacket {
