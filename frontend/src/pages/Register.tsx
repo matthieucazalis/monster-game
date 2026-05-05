@@ -1,11 +1,10 @@
 import { useState } from "react";
+import "./style/auth.css";
 
 const API_URL =
   (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
 
 export default function Register() {
-  console.log("register page rendered");
-
   const [form, setForm] = useState({
     pseudo: "",
     password: "",
@@ -54,11 +53,7 @@ export default function Register() {
         }),
       });
 
-      console.log("Response register:", res);
-
       const data = await res.json();
-
-      console.log("Data register:", data);
 
       if (!res.ok) {
         setError(data.message ?? "Registration failed.");
@@ -80,249 +75,109 @@ export default function Register() {
   };
 
   return (
-    <div style={styles.wrap}>
-      <h1 style={styles.title}>MONSTER GAME</h1>
-      <p style={styles.subtitle}>Not a tamagotchi copy in a crapy version.</p>
-      <div style={styles.card}>
-        {/* Left — form */}
-        <div style={styles.left}>
-          <Field label="Username">
+    <div className="auth-wrap">
+      <h1 className="auth-title">MONSTER GAME</h1>
+      <p className="auth-subtitle">Not a tamagotchi copy in a crapy version.</p>
+
+      <div className="auth-card">
+        {/* Left — formulaire */}
+        <div className="auth-left">
+          <div className="auth-field">
+            <label className="auth-label">Username</label>
             <input
+              className="auth-input"
               name="pseudo"
               type="text"
               value={form.pseudo}
               onChange={handleChange}
-              style={styles.input}
             />
-          </Field>
+          </div>
 
-          <Field label="Password">
+          <div className="auth-field">
+            <label className="auth-label">Password</label>
             <input
+              className="auth-input"
               name="password"
               type="password"
               value={form.password}
               onChange={handleChange}
-              style={styles.input}
             />
-          </Field>
+          </div>
 
-          <Field label="Confirm password">
+          <div className="auth-field">
+            <label className="auth-label">Confirm password</label>
             <input
+              className="auth-input"
               name="confirm"
               type="password"
               value={form.confirm}
               onChange={handleChange}
-              style={styles.input}
             />
-          </Field>
+          </div>
 
-          <Field label="Email">
+          <div className="auth-field">
+            <label className="auth-label">Email</label>
             <input
+              className="auth-input"
               name="email"
               type="email"
               value={form.email}
               onChange={handleChange}
-              style={styles.input}
             />
-          </Field>
+          </div>
 
-          <div style={styles.checkRow}>
+          <div className="auth-check-row">
             <input
               id="consent"
               name="consent"
               type="checkbox"
               checked={form.consent}
               onChange={handleChange}
-              style={{ width: 15, height: 15, marginTop: 3, flexShrink: 0 }}
             />
-            <label htmlFor="consent" style={styles.checkLabel}>
+            <label htmlFor="consent" className="auth-check-label">
               I CONSENT that this game contain is… yeah
             </label>
           </div>
-          <p style={styles.loginText}>
+
+          <p className="auth-nav-text">
             Old member?{" "}
-            <a href="/login" style={styles.link}>
+            <a href="/login" className="auth-link">
               click here to login
-            </a>
+            </a>{" "}
             !
           </p>
         </div>
 
-        <div style={styles.right}>
-          <p style={styles.spoilerTitle}>TW : spoilers.</p>
-          <p style={styles.spoilerLabel}>THIS GAME CONTAIN :</p>
-          <ul style={styles.featureList}>
-            <li style={styles.featureItem}>5 monsters with unique designs !</li>
-            <li style={styles.featureItem}>
+        {/* Right — infos + bouton */}
+        <div className="auth-right">
+          <p className="auth-spoiler-title">TW : spoilers.</p>
+          <p className="auth-spoiler-label">THIS GAME CONTAIN :</p>
+          <ul className="auth-feature-list">
+            <li className="auth-feature-item">
+              5 monsters with unique designs !
+            </li>
+            <li className="auth-feature-item">
               Objects to collect and decorate with !
             </li>
-            <li style={styles.featureItem}>
+            <li className="auth-feature-item">
               And that's it, just be patient with your lil monsters.
             </li>
           </ul>
 
           <button
+            className="auth-btn"
             onClick={handleSubmit}
             disabled={loading}
-            style={{
-              ...styles.btn,
-              ...(loading ? styles.btnDisabled : {}),
-            }}
           >
             {loading
               ? "Creating account…"
               : "Click here to create your account !"}
           </button>
 
-          {error && <p style={styles.errorMsg}>{error}</p>}
-          {success && <p style={styles.successMsg}>{success}</p>}
+          {error && <p className="auth-error">{error}</p>}
+          {success && <p className="auth-success">{success}</p>}
         </div>
       </div>
     </div>
   );
 }
-
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div style={{ marginBottom: "1rem" }}>
-      <label style={styles.label}>{label}</label>
-      {children}
-    </div>
-  );
-}
-
-const styles: Record<string, React.CSSProperties> = {
-  wrap: {
-    fontFamily: "'DM Sans', sans-serif",
-    background: "#fff",
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "2rem 1rem",
-  },
-  title: {
-    fontFamily: "'Alfa Slab One', sans-serif",
-    fontSize: 75,
-    letterSpacing: 4,
-    color: "#1a1a1a",
-    lineHeight: 1,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#777",
-    margin: "4px 0 2rem",
-  },
-  card: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    border: "1.5px solid #ddd",
-    background: "#f7f7f7",
-    width: "100%",
-    maxWidth: 680,
-  },
-  left: {
-    padding: "1.5rem",
-    borderRight: "1.5px solid #ddd",
-  },
-  right: {
-    padding: "1.5rem",
-    display: "flex",
-    flexDirection: "column",
-  },
-  label: {
-    display: "block",
-    fontSize: 14,
-    color: "#333",
-    marginBottom: 4,
-    fontWeight: 500,
-  },
-  input: {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "7px 10px",
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: 14,
-    border: "1px solid #ccc",
-    background: "#fff",
-    outline: "none",
-    borderRadius: 3,
-  },
-  checkRow: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 8,
-    marginTop: "0.5rem",
-  },
-  checkLabel: {
-    fontSize: 13,
-    color: "#555",
-  },
-  loginText: {
-    marginTop: "1rem",
-    fontSize: 13,
-    color: "#555",
-  },
-  link: {
-    color: "#0077aa",
-    textDecoration: "underline",
-  },
-  spoilerTitle: {
-    fontSize: 14,
-    fontWeight: 500,
-    textDecoration: "underline",
-    color: "#1a1a1a",
-    margin: "0 0 0.5rem",
-  },
-  spoilerLabel: {
-    fontSize: 13,
-    color: "#555",
-    fontWeight: 500,
-    marginBottom: "0.75rem",
-  },
-  featureList: {
-    listStyle: "none",
-    padding: 0,
-    margin: "0 0 auto",
-  },
-  featureItem: {
-    fontSize: 14,
-    color: "#444",
-    marginBottom: "0.75rem",
-    paddingLeft: "1rem",
-    position: "relative",
-  },
-  btn: {
-    marginTop: "1.5rem",
-    background: "#f7f7f7",
-    border: "1.5px solid #bbb",
-    padding: "10px 16px",
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: 14,
-    fontWeight: 500,
-    cursor: "pointer",
-    width: "100%",
-    borderRadius: 3,
-    color: "#1a1a1a",
-  },
-  btnDisabled: {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  },
-  errorMsg: {
-    fontSize: 13,
-    color: "#a32d2d",
-    marginTop: 8,
-  },
-  successMsg: {
-    fontSize: 13,
-    color: "#3b6d11",
-    marginTop: 8,
-  },
-};

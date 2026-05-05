@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./style/auth.css";
 
 const API_URL =
   (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
@@ -48,46 +49,42 @@ export default function Login() {
   };
 
   return (
-    <div style={styles.wrap}>
-      <h1 style={styles.title}>MONSTER GAME</h1>
-      <p style={styles.subtitle}>Not a tamagotchi copy in a crapy version.</p>
+    <div className="auth-wrap">
+      <h1 className="auth-title">MONSTER GAME</h1>
+      <p className="auth-subtitle">Not a tamagotchi copy in a crapy version.</p>
 
-      <div style={styles.card}>
-        <div style={styles.field}>
-          <label style={styles.label}>Email</label>
+      <div className="auth-card-single">
+        <div className="auth-field">
+          <label className="auth-label">Email</label>
           <input
+            className="auth-input"
             name="email"
             type="email"
             value={form.email}
             onChange={handleChange}
-            style={styles.input}
           />
         </div>
 
-        <div style={styles.field}>
-          <label style={styles.label}>Password</label>
+        <div className="auth-field">
+          <label className="auth-label">Password</label>
           <input
+            className="auth-input"
             name="password"
             type="password"
             value={form.password}
             onChange={handleChange}
-            style={styles.input}
           />
         </div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          style={{ ...styles.btn, ...(loading ? styles.btnDisabled : {}) }}
-        >
+        <button className="auth-btn" onClick={handleSubmit} disabled={loading}>
           {loading ? "Logging in…" : "Click here login ! !"}
         </button>
 
-        {error && <p style={styles.errorMsg}>{error}</p>}
+        {error && <p className="auth-error">{error}</p>}
 
-        <p style={styles.registerText}>
+        <p className="auth-nav-text">
           New Member?{" "}
-          <a href="/register" style={styles.link}>
+          <a href="/register" className="auth-link">
             click here to create an account
           </a>{" "}
           !
@@ -96,89 +93,3 @@ export default function Login() {
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  wrap: {
-    fontFamily: "'DM Sans', sans-serif",
-    background: "#fff",
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "2rem 1rem",
-  },
-  title: {
-    fontFamily: "'Alfa Slab One', sans-serif",
-    fontSize: 75,
-    letterSpacing: 4,
-    color: "#1a1a1a",
-    lineHeight: 1,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#777",
-    margin: "4px 0 2rem",
-  },
-  card: {
-    border: "1.5px solid #ddd",
-    background: "#f7f7f7",
-    width: "100%",
-    maxWidth: 380,
-    padding: "1.5rem",
-    display: "flex",
-    flexDirection: "column",
-  },
-  field: {
-    marginBottom: "1rem",
-  },
-  label: {
-    display: "block",
-    fontSize: 14,
-    color: "#333",
-    marginBottom: 4,
-    fontWeight: 500,
-  },
-  input: {
-    width: "100%",
-    boxSizing: "border-box",
-    padding: "7px 10px",
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: 14,
-    border: "1px solid #ccc",
-    background: "#fff",
-    outline: "none",
-    borderRadius: 3,
-  },
-  btn: {
-    marginTop: "0.5rem",
-    background: "#e8e8e8",
-    border: "1.5px solid #ddd",
-    padding: "10px 16px",
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: 14,
-    fontWeight: 500,
-    cursor: "pointer",
-    width: "100%",
-    borderRadius: 3,
-    color: "#1a1a1a",
-    transition: "background 0.15s",
-  },
-  btnDisabled: {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  },
-  errorMsg: {
-    fontSize: 13,
-    color: "#a32d2d",
-    marginTop: 8,
-  },
-  registerText: {
-    marginTop: "1rem",
-    fontSize: 13,
-    color: "#555",
-  },
-  link: {
-    color: "#0077aa",
-    textDecoration: "underline",
-  },
-};

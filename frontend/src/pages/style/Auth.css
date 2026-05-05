@@ -1,0 +1,196 @@
+* {
+  box-sizing: border-box;
+}
+
+.auth-wrap {
+  font-family: "DM Sans", sans-serif;
+  background: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+}
+
+.auth-title {
+  font-family: sans-serif;
+  font-size: 75px;
+  letter-spacing: 4px;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1;
+}
+
+.auth-subtitle {
+  font-size: 16px;
+  color: #777;
+  margin: 4px 0 2rem;
+}
+
+/* Card partagée */
+.auth-card {
+  border: 1.5px solid #ddd;
+  background: #f7f7f7;
+  width: 100%;
+  max-width: 680px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auth-card-single {
+  border: 1.5px solid #ddd;
+  background: #f7f7f7;
+  width: 100%;
+  max-width: 380px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-left {
+  padding: 1.5rem;
+  border-right: 1.5px solid #ddd;
+}
+
+.auth-right {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Champs */
+.auth-field {
+  margin-bottom: 1rem;
+}
+
+.auth-label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 7px 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  outline: none;
+  border-radius: 3px;
+}
+
+.auth-input:focus {
+  border-color: #888;
+}
+
+/* Checkbox */
+.auth-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.auth-check-row input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.auth-check-label {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Texte de navigation */
+.auth-nav-text {
+  margin-top: 1rem;
+  font-size: 13px;
+  color: #555;
+}
+
+.auth-link {
+  color: #0077aa;
+  text-decoration: underline;
+}
+
+/* Bouton */
+.auth-btn {
+  margin-top: 1.5rem;
+  background: #f0f0f0;
+  border: 1.5px solid #bbb;
+  padding: 10px 16px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 3px;
+  color: #1a1a1a;
+  transition: background 0.15s;
+}
+
+.auth-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.auth-error {
+  font-size: 13px;
+  color: #a32d2d;
+  margin-top: 8px;
+}
+
+.auth-success {
+  font-size: 13px;
+  color: #3b6d11;
+  margin-top: 8px;
+}
+
+/* Spoiler (register) */
+.auth-spoiler-title {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem;
+}
+
+.auth-spoiler-label {
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.auth-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto;
+}
+
+.auth-feature-item {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.auth-feature-item::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #aaa;
+}
