@@ -29,44 +29,67 @@ const getMyCollection = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const feedMonster = async (req: Request, res: Response): Promise<void> => {
+const levelUpMonster = async (req: Request, res: Response): Promise<void> => {
   try {
-    const monster = await Monster.findActiveByUserId(req.user!.id);
+    const monster = (await Monster.findActiveByUserId(
+      req.user!.id,
+    )) as MonsterRow;
 
     if (!monster) {
       res.status(404).json({ message: "Aucun monstre actif trouvé" });
       return;
     }
 
-    await Monster.feed(monster.id);
+    if (monster.is_finished) {
+      res
+        .status(400)
+        .json({ message: "Ce monstre a déjà atteint son niveau maximum" });
+      return;
+    }
 
+    const maxLevel = monster.max_level ?? 9;
+    const newLevel = monster.level + 1;
+
+    // Calcul du nouveau stade (1/3 des levels max)
+    const third = maxLevel / 3;
+    let newStade: number;
+    if (newLevel <= third) newStade = 1;
+    else if (newLevel <= third * 2) newStade = 2;
+    else newStade = 3;
+
+    // Récompense en coins
     await pool.query("UPDATE users SET coins = coins + 10 WHERE id = ?", [
       req.user!.id,
     ]);
 
-    const updatedMonster = (await Monster.findActiveByUserId(
-      req.user!.id,
-    )) as MonsterRow;
-
-    if (
-      updatedMonster.xp >= 100 &&
-      updatedMonster.level < (updatedMonster.max_level ?? Infinity)
-    ) {
-      await Monster.updateLevel(updatedMonster.id, updatedMonster.level + 1);
-      await pool.query("UPDATE monsters SET xp = 0 WHERE id = ?", [
-        updatedMonster.id,
-      ]);
+    // Niveau max atteint → complétion et suppression
+    if (newLevel >= maxLevel) {
+      await Monster.complete(
+        monster.id,
+        req.user!.id,
+        monster.specie_id,
+        maxLevel,
+      );
+      res.json({
+        message:
+          "Félicitations ! Votre monstre a atteint son niveau maximum et rejoint votre inventaire !",
+        completed: true,
+        coinsEarned: 10,
+      });
+      return;
     }
 
-    const finalMonster = await Monster.findActiveByUserId(req.user!.id);
+    await Monster.levelUp(monster.id, newLevel, newStade);
+    const updatedMonster = await Monster.findActiveByUserId(req.user!.id);
 
     res.json({
-      message: "Monstre nourri avec succès",
-      monster: finalMonster,
+      message: "Monstre monté de niveau !",
+      monster: updatedMonster,
+      completed: false,
       coinsEarned: 10,
     });
   } catch (error) {
-    console.error("Erreur feedMonster:", error);
+    console.error("Erreur levelUpMonster:", error);
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
@@ -102,4 +125,20 @@ const activateMonster = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { getMyMonster, getMyCollection, feedMonster, activateMonster };
+const getMyInventory = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const completed = await Monster.findCompletedByUserId(req.user!.id);
+    res.json(completed);
+  } catch (error) {
+    console.error("Erreur getMyInventory:", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};
+
+export {
+  getMyMonster,
+  getMyCollection,
+  levelUpMonster,
+  activateMonster,
+  getMyInventory,
+};

@@ -46,8 +46,7 @@ const buySpecies = async (req: Request, res: Response): Promise<void> => {
 
     await Monster.create({
       user_id: req.user!.id,
-      species_id: species.id,
-      name: species.name,
+      specie_id: species.id,
     });
 
     const newMonster = await Monster.findActiveByUserId(req.user!.id);

@@ -26,12 +26,15 @@ const register = async (req: Request, res: Response): Promise<void> => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userId = await User.create({ email, password: hashedPassword, pseudo });
+    const userId = await User.create({
+      email,
+      password: hashedPassword,
+      pseudo,
+    });
 
     await Monster.create({
       user_id: userId,
-      species_id: 1,
-      name: `Monstre de ${pseudo}`,
+      specie_id: 1,
     });
 
     const token = generateToken({ id: userId, email, role: "user" });

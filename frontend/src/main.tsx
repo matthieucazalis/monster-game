@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import AppRouter from "./router";
+import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("app") as HTMLElement).render(
   <React.StrictMode>
-    <AppRouter />
+    <App />
   </React.StrictMode>,
 );

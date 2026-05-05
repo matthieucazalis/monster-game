@@ -21,14 +21,12 @@ export interface UserRow extends RowDataPacket {
 export interface MonsterRow extends RowDataPacket {
   id: number;
   user_id: number;
-  species_id: number;
-  name: string;
-  hunger_level: number;
-  evolution_stage: number;
-  xp: number;
+  specie_id: number;
   level: number;
-  last_fed_at: Date | null;
+  stade: number;
+  is_finished: boolean;
   is_archived: boolean;
+  last_update: Date | null;
   created_at: Date;
   species_name?: string;
   hunger_interval_hours?: number;
