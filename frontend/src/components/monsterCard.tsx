@@ -90,14 +90,8 @@ export default function MonsterCard({ monster, onLevelUp }: MonsterCardProps) {
       </div>
 
       <div className="monster-stats-row">
-        <div className="monster-stat">
-          <div className="monster-stat-icon">⭐</div>
-          Level : {monster.level}
-        </div>
-        <div className="monster-stat">
-          <div className="monster-stat-icon">👑</div>
-          Stade : {monster.stade}/3
-        </div>
+        <div className="monster-stat">Level : {monster.level}</div>
+        <div className="monster-stat">Stade : {monster.stade}/3</div>
       </div>
     </div>
   );

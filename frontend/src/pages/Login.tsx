@@ -51,7 +51,7 @@ export default function Login() {
   return (
     <div className="auth-wrap">
       <h1 className="auth-title">MONSTER GAME</h1>
-      <p className="auth-subtitle">Not a tamagotchi copy in a crapy version.</p>
+      <p className="auth-subtitle">Un tamagotchi suspicieux.</p>
 
       <div className="auth-card-single">
         <div className="auth-field">
@@ -66,7 +66,7 @@ export default function Login() {
         </div>
 
         <div className="auth-field">
-          <label className="auth-label">Password</label>
+          <label className="auth-label">Mot de passe</label>
           <input
             className="auth-input"
             name="password"
@@ -77,17 +77,16 @@ export default function Login() {
         </div>
 
         <button className="auth-btn" onClick={handleSubmit} disabled={loading}>
-          {loading ? "Logging in…" : "Click here login ! !"}
+          {loading ? "Connexion…" : "Clique ici pour te connecter !"}
         </button>
 
         {error && <p className="auth-error">{error}</p>}
 
         <p className="auth-nav-text">
-          New Member?{" "}
+          Nouveau membre ?{" "}
           <a href="/register" className="auth-link">
-            click here to create an account
+            Clique ici pour créer un compte !
           </a>{" "}
-          !
         </p>
       </div>
     </div>

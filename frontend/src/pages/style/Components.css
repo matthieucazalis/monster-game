@@ -1,23 +1,17 @@
-/* ================================
-   MONSTER DISPLAY
-   ================================ */
+/* MONSTER  */
 
 .monster-display {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  max-width: 420px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  gap: clamp(12px, 1.5vh, 20px);
+  width: clamp(360px, 42vw, 640px);
+  padding: clamp(20px, 2.5vh, 40px);
 }
 
 .monster-image-wrap {
-  width: 240px;
-  height: 240px;
+  width: clamp(240px, 28vw, 440px);
+  height: clamp(240px, 28vw, 440px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +22,6 @@
 .monster-image-wrap:hover {
   transform: scale(1.04);
 }
-
 .monster-image-wrap.disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -48,19 +41,18 @@
 }
 
 .monster-name {
-  font-size: 22px;
+  font-size: clamp(22px, 2.2vw, 34px);
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
   text-align: center;
 }
 
-/* Timer bar */
 .timer-bar-wrap {
   width: 100%;
   background: #e5e7eb;
   border-radius: 50px;
-  height: 24px;
+  height: clamp(24px, 2.8vh, 34px);
   overflow: hidden;
   position: relative;
 }
@@ -78,16 +70,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: clamp(12px, 1.1vw, 15px);
   font-weight: 600;
   color: #fff;
   mix-blend-mode: difference;
 }
 
-/* Stats row */
 .monster-stats-row {
   display: flex;
-  gap: 24px;
+  gap: clamp(16px, 2.5vw, 40px);
   justify-content: center;
   width: 100%;
 }
@@ -95,31 +86,29 @@
 .monster-stat {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  gap: 10px;
+  font-size: clamp(14px, 1.4vw, 20px);
   font-weight: 600;
   color: #333;
 }
 
 .monster-stat-icon {
-  width: 30px;
-  height: 30px;
+  width: clamp(30px, 3vw, 44px);
+  height: clamp(30px, 3vw, 44px);
   background: #1a1a1a;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 13px;
+  font-size: clamp(14px, 1.4vw, 20px);
 }
 
-/* ================================
-   DECORATION SHELF
-   ================================ */
+/* DECORATION  */
 
 .shelf-wrap {
   position: relative;
-  width: 600px;
+  width: clamp(360px, 44vw, 680px);
 }
 
 .shelf-image {
@@ -127,58 +116,61 @@
   display: block;
 }
 
-/* Slots tablette HAUTE
-   Sur l'image 1024x1024 :
-   - tablette du haut : top ~14%, hauteur ~6%
-   - gauche ~13%, droite ~87%
-   On positionne les items SUR la tablette donc top ~8% */
 .shelf-top-items {
   position: absolute;
-  top: 8%;
-  left: 15%;
-  right: 15%;
+  top: 13%;
+  left: 13%;
+  right: 13%;
+  height: 14%;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
 }
 
-/* Slots tablette BASSE
-   - tablette du bas : top ~49%, hauteur ~5%
-   On positionne les items SUR la tablette donc top ~43% */
 .shelf-bottom-items {
   position: absolute;
-  top: 43%;
-  left: 17%;
-  right: 17%;
+  top: 45%;
+  left: 15%;
+  right: 15%;
+  height: 14%;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
 }
 
 .shelf-slot {
-  width: 70px;
-  height: 70px;
+  width: clamp(55px, 5.5vw, 90px);
+  height: clamp(55px, 5.5vw, 90px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
 .shelf-slot img {
-  width: 55px;
-  height: 55px;
+  width: clamp(44px, 4.4vw, 72px);
+  height: clamp(44px, 4.4vw, 72px);
   object-fit: contain;
 }
 
 .shelf-slot-empty {
-  width: 50px;
-  height: 50px;
-  border: 1.5px dashed rgba(180, 140, 80, 0.4);
+  width: clamp(42px, 4.2vw, 68px);
+  height: clamp(42px, 4.2vw, 68px);
+  border: 1.5px dashed rgba(180, 140, 80, 0.5);
   border-radius: 4px;
 }
 
-/* ================================
-   STATS BAR
-   ================================ */
+@media (max-width: 800px) {
+  .monster-display {
+    width: 90vw;
+    max-width: 500px;
+  }
+  .shelf-wrap {
+    width: 90vw !important;
+    max-width: 500px;
+  }
+}
+
+/* STATS BAR */
 
 .stats-bar-wrap {
   width: 100%;
@@ -186,13 +178,11 @@
   flex-direction: column;
   gap: 6px;
 }
-
 .stats-bar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .stats-bar-name {
   font-size: 14px;
   font-weight: 600;
@@ -203,7 +193,6 @@
   color: #777;
   font-weight: 500;
 }
-
 .stats-bar-track {
   width: 100%;
   height: 8px;
@@ -211,20 +200,16 @@
   border-radius: 50px;
   overflow: hidden;
 }
-
 .stats-bar-fill {
   height: 100%;
   border-radius: 50px;
   background: #1a1a1a;
   transition: width 0.4s ease;
 }
-
 .stats-bar-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
-
 .stats-bar-stade {
   font-size: 12px;
   color: #555;

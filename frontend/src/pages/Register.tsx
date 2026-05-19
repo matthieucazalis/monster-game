@@ -77,13 +77,13 @@ export default function Register() {
   return (
     <div className="auth-wrap">
       <h1 className="auth-title">MONSTER GAME</h1>
-      <p className="auth-subtitle">Not a tamagotchi copy in a crapy version.</p>
+      <p className="auth-subtitle">Un tamagotchi suspicieux.</p>
 
       <div className="auth-card">
         {/* Left — formulaire */}
         <div className="auth-left">
           <div className="auth-field">
-            <label className="auth-label">Username</label>
+            <label className="auth-label">Nom d'utilisateur</label>
             <input
               className="auth-input"
               name="pseudo"
@@ -94,7 +94,7 @@ export default function Register() {
           </div>
 
           <div className="auth-field">
-            <label className="auth-label">Password</label>
+            <label className="auth-label">Mot de passe</label>
             <input
               className="auth-input"
               name="password"
@@ -105,7 +105,7 @@ export default function Register() {
           </div>
 
           <div className="auth-field">
-            <label className="auth-label">Confirm password</label>
+            <label className="auth-label">Confirmer le mot de passe</label>
             <input
               className="auth-input"
               name="confirm"
@@ -135,14 +135,14 @@ export default function Register() {
               onChange={handleChange}
             />
             <label htmlFor="consent" className="auth-check-label">
-              I CONSENT that this game contain is… yeah
+              Je consens à ce que ce jeu contienne… ouais
             </label>
           </div>
 
           <p className="auth-nav-text">
-            Old member?{" "}
+            Ancien membre?{" "}
             <a href="/login" className="auth-link">
-              click here to login
+              Clique ici pour te connecter
             </a>{" "}
             !
           </p>
@@ -151,16 +151,16 @@ export default function Register() {
         {/* Right — infos + bouton */}
         <div className="auth-right">
           <p className="auth-spoiler-title">TW : spoilers.</p>
-          <p className="auth-spoiler-label">THIS GAME CONTAIN :</p>
+          <p className="auth-spoiler-label">CE JEUX CONTIENT :</p>
           <ul className="auth-feature-list">
             <li className="auth-feature-item">
-              5 monsters with unique designs !
+              5 monstres avec des designs et évolutions uniques !
             </li>
             <li className="auth-feature-item">
-              Objects to collect and decorate with !
+              Objets à collecter et à décorer avec !
             </li>
             <li className="auth-feature-item">
-              And that's it, just be patient with your lil monsters.
+              Et c'est tout, soyez patients avec vos petits monstres.
             </li>
           </ul>
 
@@ -170,8 +170,8 @@ export default function Register() {
             disabled={loading}
           >
             {loading
-              ? "Creating account…"
-              : "Click here to create your account !"}
+              ? "Creation du compte…"
+              : "Clique ici pour créer ton compte !"}
           </button>
 
           {error && <p className="auth-error">{error}</p>}

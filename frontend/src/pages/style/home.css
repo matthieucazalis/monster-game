@@ -1,145 +1,41 @@
-/* ================================
-   HOME + NAVBAR
-   ================================ */
-
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .home-wrap {
   height: 100vh;
-  background: #fff;
   font-family: "DM Sans", sans-serif;
   display: flex;
   flex-direction: column;
+  background: #fff;
   overflow: hidden;
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 24px;
-  position: relative;
-  border-bottom: 1px solid #eee;
-  flex-shrink: 0;
-  background: #fff;
-}
-
-.navbar-center {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 4px;
-}
-
-.navbar-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #555;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: all 0.15s;
-  text-decoration: none;
-  font-family: "DM Sans", sans-serif;
-}
-
-.navbar-item:hover {
-  color: #1a1a1a;
-  background: #efefef;
-}
-
-.navbar-item.active {
-  background: #fff;
-  color: #1a1a1a;
-  border: 1px solid #ccc;
-  font-weight: 600;
-}
-
-.navbar-item svg {
-  width: 18px;
-  height: 18px;
-}
-
-.navbar-settings {
-  position: absolute;
-  right: 24px;
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #555;
-  transition: background 0.15s;
-}
-
-.navbar-settings:hover {
-  background: #efefef;
-  color: #1a1a1a;
-}
-
-/* ================================
-   GAME AREA
-   ================================ */
-
+/* Game area */
 .game-area {
   flex: 1;
   display: flex;
   flex-direction: column;
-  position: relative;
+  padding: 16px 32px 24px;
+  gap: 16px;
   overflow: hidden;
 }
 
-/* Zone du haut : fond + monstre */
-.game-top {
-  flex: 1;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
 
-/* Image de fond (sol/ciel) */
-.game-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url("/images/floor.png");
-  background-size: cover;
-  background-position: bottom center;
-  z-index: 0;
-}
-
-/* Coins */
 .coins-badge {
-  position: relative;
-  z-index: 2;
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.9);
+  background: #f7f7f7;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 6px 14px 6px 6px;
-  margin: 12px 0 0 16px;
   font-size: 15px;
   font-weight: 700;
   color: #1a1a1a;
+  align-self: flex-start;
 }
 
 .coins-icon {
@@ -155,25 +51,38 @@
   font-weight: 700;
 }
 
-/* Zone du monstre centrée */
-.monster-area {
-  position: relative;
-  z-index: 2;
+/* Côte à côte */
+.game-main {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  gap: clamp(24px, 4vw, 72px);
+  flex-wrap: wrap;
+  overflow: hidden;
 }
 
-/* Zone du bas : comptoir */
-.game-bottom {
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+.monster-area {
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: flex-end;
+}
+.shelf-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 800px) {
+  .home-wrap {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+  .game-main {
+    flex-direction: column;
+    overflow-y: auto;
+  }
 }
 
 /* Tutorial */

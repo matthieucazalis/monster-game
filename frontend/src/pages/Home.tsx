@@ -102,7 +102,7 @@ export default function Home() {
         alert(data.message);
       } else setMonster(data.monster);
     } catch {
-      setError("Erreur lors du level up.");
+      setError("Erreur lors du level up");
     }
   };
 
@@ -127,7 +127,7 @@ export default function Home() {
         className="home-wrap"
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <p style={{ color: "#777" }}>Chargement...</p>
+        <p style={{ color: "#fff" }}>Chargement...</p>
       </div>
     );
 
@@ -136,16 +136,19 @@ export default function Home() {
       <Navbar />
 
       <div className="game-area">
-        {/* Fond */}
-        <div className="game-bg" />
+        <div className="coins-badge">
+          <div className="coins-icon">$</div>
+          {String(user?.coins ?? 0).padStart(3, "0")}
+        </div>
 
-        {/* Top : coins + monstre */}
-        <div className="game-top">
-          <div className="coins-badge">
-            <div className="coins-icon">$</div>
-            {String(user?.coins ?? 0).padStart(3, "0")}
-          </div>
+        {error && (
+          <p style={{ color: "#a32d2d", fontSize: 13, margin: "0 0 0 16px" }}>
+            {error}
+          </p>
+        )}
 
+        {/* Monstre + Comptoir côte à côte */}
+        <div className="game-main">
           <div className="monster-area">
             {monster ? (
               <MonsterCard monster={monster} onLevelUp={handleLevelUp} />
@@ -160,6 +163,7 @@ export default function Home() {
                   padding: 24,
                   borderRadius: 4,
                   border: "1px solid #ddd",
+                  backdropFilter: "blur(4px)",
                 }}
               >
                 <p style={{ fontSize: 15, color: "#777", margin: 0 }}>
@@ -183,30 +187,16 @@ export default function Home() {
             )}
           </div>
 
-          {error && (
-            <p
-              style={{
-                color: "#a32d2d",
-                fontSize: 13,
-                position: "relative",
-                zIndex: 2,
-              }}
-            >
-              {error}
-            </p>
-          )}
-        </div>
-
-        {/* Bottom : comptoir */}
-        <div className="game-bottom">
-          <DecorationShelf decorations={decorations} />
+          <div className="shelf-area">
+            <DecorationShelf decorations={decorations} />
+          </div>
         </div>
       </div>
 
       {showTutorial && (
         <div className="tutorial-overlay">
           <div className="tutorial-modal">
-            <h2>Bienvenue dans Monster Game ! 🎉</h2>
+            <h2>Bienvenue dans Monster Game ! </h2>
             <p>Le tutoriel arrive bientôt...</p>
             <button className="tutorial-btn" onClick={closeTutorial}>
               Commencer !
