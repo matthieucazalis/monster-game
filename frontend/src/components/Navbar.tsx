@@ -23,8 +23,8 @@ export default function Navbar() {
 
         {/* INVENTAIRE */}
         <button
-          className={`navbar-item ${isActive("/inventaire") ? "active" : ""}`}
-          onClick={() => navigate("/inventaire")}
+          className={`navbar-item ${isActive("/inventory") ? "active" : ""}`}
+          onClick={() => navigate("/inventory")}
         >
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 6h18v2H3V6zm0 4h18v10H3V10z" />
@@ -32,10 +32,10 @@ export default function Navbar() {
           Inventaire
         </button>
 
-        {/* BOUTIQUE */}
+        {/* SHOP */}
         <button
-          className={`navbar-item ${isActive("/boutique") ? "active" : ""}`}
-          onClick={() => navigate("/boutique")}
+          className={`navbar-item ${isActive("/shop") ? "active" : ""}`}
+          onClick={() => navigate("/shop")}
         >
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 9h-1V6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zm-7-3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm3.586 7H8v3h8v-3z" />

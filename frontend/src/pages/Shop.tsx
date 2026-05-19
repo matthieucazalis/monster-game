@@ -13,7 +13,6 @@ interface Species {
   hunger_interval_hours: number;
   max_level: number;
   base_image_url: string;
-  is_starter: boolean;
 }
 
 interface Decoration {
@@ -29,21 +28,13 @@ interface MyDecoration {
   user_decoration_id: number;
 }
 
-interface Monster {
-  id: number;
-  specie_id: number;
-  is_archived: boolean;
-}
-
 export default function Shop() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<"species" | "decorations">("species");
   const [species, setSpecies] = useState<Species[]>([]);
   const [decorations, setDecorations] = useState<Decoration[]>([]);
   const [ownedDecoIds, setOwnedDecoIds] = useState<number[]>([]);
-  const [monsters, setMonsters] = useState<Monster[]>([]);
   const [coins, setCoins] = useState(0);
-  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -62,11 +53,10 @@ export default function Shop() {
   const fetchData = async () => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const [speciesRes, decoRes, myDecoRes, monstersRes] = await Promise.all([
+      const [speciesRes, decoRes, myDecoRes] = await Promise.all([
         fetch(`${API_URL}/api/species`, { headers }),
         fetch(`${API_URL}/api/decorations`, { headers }),
         fetch(`${API_URL}/api/decorations/my`, { headers }),
-        fetch(`${API_URL}/api/monsters/collection`, { headers }),
       ]);
       if (speciesRes.ok) setSpecies(await speciesRes.json());
       if (decoRes.ok) setDecorations(await decoRes.json());
@@ -74,13 +64,11 @@ export default function Shop() {
         const data: MyDecoration[] = await myDecoRes.json();
         setOwnedDecoIds(data.map((d) => d.id));
       }
-      if (monstersRes.ok) setMonsters(await monstersRes.json());
-    } catch {
-      setError("Erreur lors du chargement.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setError("Erreur lors du chargement de la boutique.");
     }
-  };
+}
 
   const updateCoins = (spent: number) => {
     const newCoins = coins - spent;
@@ -136,19 +124,6 @@ export default function Shop() {
     }
   };
 
-  const hasActiveMonster = (speciesId: number) =>
-    monsters.some((m: Monster) => m.specie_id === speciesId && !m.is_archived);
-
-  if (loading)
-    return (
-      <div className="shop-wrap">
-        <Navbar />
-        <p style={{ textAlign: "center", marginTop: 40, color: "#777" }}>
-          Chargement...
-        </p>
-      </div>
-    );
-
   return (
     <div className="shop-wrap">
       <Navbar />
@@ -182,7 +157,6 @@ export default function Shop() {
         {tab === "species" && (
           <div className="shop-grid">
             {species.map((s) => {
-              const active = hasActiveMonster(s.id);
               const canAfford = coins >= s.unlock_cost;
               return (
                 <div key={s.id} className="shop-card">
@@ -202,22 +176,14 @@ export default function Shop() {
                       {s.hunger_interval_hours}h
                     </p>
                     <div className="shop-card-footer">
-                      <span className="shop-price">
-                        {s.is_starter ? "Gratuit" : `${s.unlock_cost} coins`}
-                      </span>
-                      {s.is_starter ? (
-                        <span className="shop-badge">Départ</span>
-                      ) : active ? (
-                        <span className="shop-badge">Actif</span>
-                      ) : (
-                        <button
-                          className={`shop-buy-btn${!canAfford ? " disabled" : ""}`}
-                          onClick={() => canAfford && handleBuySpecies(s)}
-                          disabled={!canAfford}
-                        >
-                          Acheter
-                        </button>
-                      )}
+                      <span className="shop-price">{s.unlock_cost} coins</span>
+                      <button
+                        className={`shop-buy-btn${!canAfford ? " disabled" : ""}`}
+                        onClick={() => canAfford && handleBuySpecies(s)}
+                        disabled={!canAfford}
+                      >
+                        Acheter
+                      </button>
                     </div>
                   </div>
                 </div>

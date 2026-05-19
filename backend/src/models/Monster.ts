@@ -10,10 +10,13 @@ const Monster = {
     user_id: number;
     specie_id: number;
   }): Promise<number> => {
+    // Au début : immédiatement cliquable
     const [result] = await pool.query<ResultSetHeader>(
-      "INSERT INTO monsters (user_id, specie_id) VALUES (?, ?)",
+      `INSERT INTO monsters (user_id, specie_id, level, stade, next_available_at)
+       VALUES (?, ?, 1, 1, NOW())`,
       [user_id, specie_id],
     );
+
     return result.insertId;
   },
 
@@ -28,6 +31,7 @@ const Monster = {
        LIMIT 1`,
       [user_id],
     );
+
     return rows[0];
   },
 
@@ -40,6 +44,7 @@ const Monster = {
        ORDER BY m.is_archived ASC, m.created_at DESC`,
       [user_id],
     );
+
     return rows;
   },
 
@@ -47,12 +52,21 @@ const Monster = {
     monster_id: number,
     newLevel: number,
     newStade: number,
+    cooldownHours: number,
   ): Promise<void> => {
-    await pool.query("UPDATE monsters SET level = ?, stade = ? WHERE id = ?", [
-      newLevel,
-      newStade,
-      monster_id,
-    ]);
+    const nextAvailable = new Date(Date.now() + cooldownHours * 60 * 60 * 1000);
+
+    await pool.query(
+      `UPDATE monsters
+       SET level = ?, stade = ?, next_available_at = ?
+       WHERE id = ?`,
+      [newLevel, newStade, nextAvailable, monster_id],
+    );
+  },
+
+  isReady: (monster: MonsterRow): boolean => {
+    if (!monster.next_available_at) return true;
+    return new Date() >= new Date(monster.next_available_at);
   },
 
   finish: async (monster_id: number): Promise<void> => {
@@ -84,6 +98,7 @@ const Monster = {
       "INSERT INTO completed_monsters (user_id, specie_id, max_level_reached) VALUES (?, ?, ?)",
       [user_id, specie_id, max_level],
     );
+
     await pool.query("DELETE FROM monsters WHERE id = ?", [monster_id]);
   },
 
@@ -96,6 +111,7 @@ const Monster = {
        ORDER BY cm.completed_at DESC`,
       [user_id],
     );
+
     return rows;
   },
 };
