@@ -1,0 +1,236 @@
+/* ================================
+   MONSTER DISPLAY
+   ================================ */
+
+.monster-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.monster-image-wrap {
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.monster-image-wrap:hover {
+  transform: scale(1.04);
+}
+
+.monster-image-wrap.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.monster-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.monster-divider {
+  width: 60%;
+  border: none;
+  border-top: 2px dashed #ccc;
+  margin: 0;
+}
+
+.monster-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+/* Timer bar */
+.timer-bar-wrap {
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 50px;
+  height: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: #1a1a1a;
+  transition: width 1s linear;
+}
+
+.timer-bar-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+/* Stats row */
+.monster-stats-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  width: 100%;
+}
+
+.monster-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.monster-stat-icon {
+  width: 30px;
+  height: 30px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+}
+
+/* ================================
+   DECORATION SHELF
+   ================================ */
+
+.shelf-wrap {
+  position: relative;
+  width: 600px;
+}
+
+.shelf-image {
+  width: 100%;
+  display: block;
+}
+
+/* Slots tablette HAUTE
+   Sur l'image 1024x1024 :
+   - tablette du haut : top ~14%, hauteur ~6%
+   - gauche ~13%, droite ~87%
+   On positionne les items SUR la tablette donc top ~8% */
+.shelf-top-items {
+  position: absolute;
+  top: 8%;
+  left: 15%;
+  right: 15%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+/* Slots tablette BASSE
+   - tablette du bas : top ~49%, hauteur ~5%
+   On positionne les items SUR la tablette donc top ~43% */
+.shelf-bottom-items {
+  position: absolute;
+  top: 43%;
+  left: 17%;
+  right: 17%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.shelf-slot {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.shelf-slot img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+}
+
+.shelf-slot-empty {
+  width: 50px;
+  height: 50px;
+  border: 1.5px dashed rgba(180, 140, 80, 0.4);
+  border-radius: 4px;
+}
+
+/* ================================
+   STATS BAR
+   ================================ */
+
+.stats-bar-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stats-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-bar-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+.stats-bar-level {
+  font-size: 13px;
+  color: #777;
+  font-weight: 500;
+}
+
+.stats-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.stats-bar-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: #1a1a1a;
+  transition: width 0.4s ease;
+}
+
+.stats-bar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-bar-stade {
+  font-size: 12px;
+  color: #555;
+  font-weight: 500;
+}
+.stats-bar-percent {
+  font-size: 12px;
+  color: #aaa;
+}

@@ -1,0 +1,51 @@
+import { useNavigate, useLocation } from "react-router-dom";
+import "../pages/style/home.css";
+
+export default function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-center">
+        <button
+          className={`navbar-item ${isActive("/game") ? "active" : ""}`}
+          onClick={() => navigate("/game")}
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Home
+        </button>
+
+        <button
+          className={`navbar-item ${isActive("/inventaire") ? "active" : ""}`}
+          onClick={() => navigate("/inventaire")}
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.06 15.73 0 13 0c-1.5 0-2.81.75-3.67 1.87L8 3.27 6.67 1.87C5.81.75 4.5 0 3 0 .27 0-2 2.06-2 4.64c0 .48.11.92.18 1.36H-2v2h24V6zM4 9v11h16V9H4z" />
+          </svg>
+          Inventaire
+        </button>
+
+        <button
+          className={`navbar-item ${isActive("/boutique") ? "active" : ""}`}
+          onClick={() => navigate("/boutique")}
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.2 14.8l.03-.12.97-1.68H17c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 21.46 4H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5 16.5 5 17h14v-2H7.42c-.14 0-.22-.08-.22-.2z" />
+          </svg>
+          Boutique
+        </button>
+      </div>
+
+      <button className="navbar-settings" onClick={() => navigate("/settings")}>
+        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.02 7.02 0 0 0-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.37 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+        </svg>
+      </button>
+    </nav>
+  );
+}
