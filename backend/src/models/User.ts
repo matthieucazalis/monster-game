@@ -13,7 +13,7 @@ const User = {
 
   findById: async (id: number): Promise<UserRow | undefined> => {
     const [rows] = await pool.query<UserRow[]>(
-      "SELECT id, email, pseudo, role, created_at FROM users WHERE id = ?",
+      "SELECT id, email, pseudo, role, coins, is_first_login, created_at FROM users WHERE id = ?",
       [id],
     );
     return rows[0];

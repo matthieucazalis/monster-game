@@ -8,7 +8,7 @@ interface MonsterCardProps {
     specie_id: number;
     level: number;
     stade: number;
-    last_update: string | null;
+    next_available_at: string | null;
     species_name: string;
     hunger_interval_hours: number;
     max_level: number;
@@ -17,13 +17,24 @@ interface MonsterCardProps {
   onLevelUp: () => void;
 }
 
-function getTimeRemaining(lastUpdate: string | null, intervalHours: number) {
-  if (!lastUpdate) return 0;
-  const last = new Date(lastUpdate).getTime();
-  const now = Date.now();
+function getTimeRemaining(nextAvailableAt: string | null): number {
+  // NULL = jamais cliqué → toujours prêt
+  if (!nextAvailableAt) return 0;
+  const next = new Date(nextAvailableAt).getTime();
+  return Math.max(0, next - Date.now());
+}
+
+function getProgress(
+  nextAvailableAt: string | null,
+  intervalHours: number,
+): number {
+  if (!nextAvailableAt) return 100;
+  const next = new Date(nextAvailableAt).getTime();
   const intervalMs = intervalHours * 60 * 60 * 1000;
-  const elapsed = now - last;
-  return Math.max(0, intervalMs - elapsed);
+  const start = next - intervalMs;
+  const now = Date.now();
+  const elapsed = now - start;
+  return Math.min(100, Math.max(0, (elapsed / intervalMs) * 100));
 }
 
 function formatTime(ms: number): string {
@@ -39,21 +50,22 @@ function formatTime(ms: number): string {
 
 export default function MonsterCard({ monster, onLevelUp }: MonsterCardProps) {
   const [remaining, setRemaining] = useState(() =>
-    getTimeRemaining(monster.last_update, monster.hunger_interval_hours),
+    getTimeRemaining(monster.next_available_at),
+  );
+  const [progress, setProgress] = useState(() =>
+    getProgress(monster.next_available_at, monster.hunger_interval_hours),
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemaining(
-        getTimeRemaining(monster.last_update, monster.hunger_interval_hours),
+      setRemaining(getTimeRemaining(monster.next_available_at));
+      setProgress(
+        getProgress(monster.next_available_at, monster.hunger_interval_hours),
       );
     }, 1000);
     return () => clearInterval(interval);
-  }, [monster.last_update, monster.hunger_interval_hours]);
+  }, [monster.next_available_at, monster.hunger_interval_hours]);
 
-  const intervalMs = monster.hunger_interval_hours * 60 * 60 * 1000;
-  const progress =
-    intervalMs > 0 ? ((intervalMs - remaining) / intervalMs) * 100 : 100;
   const canLevelUp = remaining <= 0;
   const imageUrl = getMonsterImageUrl(
     monster.base_image_url,

@@ -10,13 +10,11 @@ const Monster = {
     user_id: number;
     specie_id: number;
   }): Promise<number> => {
-    // Au début : immédiatement cliquable
     const [result] = await pool.query<ResultSetHeader>(
       `INSERT INTO monsters (user_id, specie_id, level, stade, next_available_at)
-       VALUES (?, ?, 1, 1, NOW())`,
+       VALUES (?, ?, 1, 1, NULL)`,
       [user_id, specie_id],
     );
-
     return result.insertId;
   },
 
@@ -31,7 +29,6 @@ const Monster = {
        LIMIT 1`,
       [user_id],
     );
-
     return rows[0];
   },
 
@@ -44,8 +41,12 @@ const Monster = {
        ORDER BY m.is_archived ASC, m.created_at DESC`,
       [user_id],
     );
-
     return rows;
+  },
+
+  isReady: (monster: MonsterRow): boolean => {
+    if (!monster.next_available_at) return true;
+    return new Date() >= new Date(monster.next_available_at);
   },
 
   levelUp: async (
@@ -55,18 +56,10 @@ const Monster = {
     cooldownHours: number,
   ): Promise<void> => {
     const nextAvailable = new Date(Date.now() + cooldownHours * 60 * 60 * 1000);
-
     await pool.query(
-      `UPDATE monsters
-       SET level = ?, stade = ?, next_available_at = ?
-       WHERE id = ?`,
+      `UPDATE monsters SET level = ?, stade = ?, next_available_at = ? WHERE id = ?`,
       [newLevel, newStade, nextAvailable, monster_id],
     );
-  },
-
-  isReady: (monster: MonsterRow): boolean => {
-    if (!monster.next_available_at) return true;
-    return new Date() >= new Date(monster.next_available_at);
   },
 
   finish: async (monster_id: number): Promise<void> => {
@@ -98,20 +91,18 @@ const Monster = {
       "INSERT INTO completed_monsters (user_id, specie_id, max_level_reached) VALUES (?, ?, ?)",
       [user_id, specie_id, max_level],
     );
-
     await pool.query("DELETE FROM monsters WHERE id = ?", [monster_id]);
   },
 
   findCompletedByUserId: async (user_id: number): Promise<RowDataPacket[]> => {
     const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT cm.*, s.name AS species_name, s.base_image_url
+      `SELECT cm.*, s.name AS species_name, s.base_image_url, s.lore
        FROM completed_monsters cm
        JOIN species s ON cm.specie_id = s.id
        WHERE cm.user_id = ?
        ORDER BY cm.completed_at DESC`,
       [user_id],
     );
-
     return rows;
   },
 };

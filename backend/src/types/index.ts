@@ -27,7 +27,7 @@ export interface MonsterRow extends RowDataPacket {
   stade: number;
   is_finished: boolean;
   is_archived: boolean;
-  last_update: Date | null;
+  next_available_at: Date | null;
   created_at: Date;
   species_name?: string;
   hunger_interval_hours?: number;
@@ -43,6 +43,7 @@ export interface SpeciesRow extends RowDataPacket {
   max_level: number;
   base_image_url: string;
   is_starter: boolean;
+  lore?: string;
 }
 
 export interface DecorationRow extends RowDataPacket {

@@ -6,12 +6,10 @@ import { MonsterRow } from "../types";
 const getMyMonster = async (req: Request, res: Response): Promise<void> => {
   try {
     const monster = await Monster.findActiveByUserId(req.user!.id);
-
     if (!monster) {
       res.status(404).json({ message: "Aucun monstre actif trouvé" });
       return;
     }
-
     res.json(monster);
   } catch (error) {
     console.error("Erreur getMyMonster:", error);
@@ -41,40 +39,40 @@ const levelUpMonster = async (req: Request, res: Response): Promise<void> => {
     }
 
     if (monster.is_finished) {
+      res
+        .status(400)
+        .json({ message: "Ce monstre a déjà atteint son niveau maximum" });
+      return;
+    }
+
+    // Vérification du timer
+    // NULL = jamais cliqué → premier clic toujours autorisé
+    if (!Monster.isReady(monster)) {
+      const next = new Date(monster.next_available_at!).getTime();
       res.status(400).json({
-        message: "Ce monstre a déjà atteint son niveau maximum",
+        message: "Monstre pas encore prêt",
+        remainingMs: next - Date.now(),
       });
       return;
     }
 
-    if (monster.next_available_at) {
-      const now = new Date().getTime();
-      const next = new Date(monster.next_available_at).getTime();
-
-      if (now < next) {
-        res.status(400).json({
-          message: "Monstre pas encore prêt",
-          remainingMs: next - now,
-        });
-        return;
-      }
-    }
-
     const maxLevel = monster.max_level ?? 9;
     const newLevel = monster.level + 1;
-
     const third = maxLevel / 3;
 
     let newStade: number;
-
     if (newLevel <= third) newStade = 1;
     else if (newLevel <= third * 2) newStade = 2;
     else newStade = 3;
 
-    await pool.query("UPDATE users SET coins = coins + 10 WHERE id = ?", [
+    // Coins aléatoires entre 5 et 9
+    const coinsEarned = Math.floor(Math.random() * 5) + 5;
+    await pool.query("UPDATE users SET coins = coins + ? WHERE id = ?", [
+      coinsEarned,
       req.user!.id,
     ]);
 
+    // Monstre terminé
     if (newLevel >= maxLevel) {
       await Monster.complete(
         monster.id,
@@ -82,21 +80,21 @@ const levelUpMonster = async (req: Request, res: Response): Promise<void> => {
         monster.specie_id,
         maxLevel,
       );
-
       res.json({
         message:
           "Félicitations ! Votre monstre a atteint son niveau maximum et rejoint votre inventaire !",
         completed: true,
-        coinsEarned: 10,
+        coinsEarned,
       });
-
       return;
     }
+
+    // Level up + reset timer à exactement maintenant + cooldown
     await Monster.levelUp(
       monster.id,
       newLevel,
       newStade,
-      monster.hunger_interval_hours ?? 0,
+      monster.hunger_interval_hours ?? 4,
     );
 
     const updatedMonster = await Monster.findActiveByUserId(req.user!.id);
@@ -105,7 +103,7 @@ const levelUpMonster = async (req: Request, res: Response): Promise<void> => {
       message: "Monstre monté de niveau !",
       monster: updatedMonster,
       completed: false,
-      coinsEarned: 10,
+      coinsEarned,
     });
   } catch (error) {
     console.error("Erreur levelUpMonster:", error);
@@ -123,9 +121,9 @@ const activateMonster = async (req: Request, res: Response): Promise<void> => {
     );
 
     if (rows.length === 0) {
-      res.status(404).json({
-        message: "Monstre introuvable dans votre collection",
-      });
+      res
+        .status(404)
+        .json({ message: "Monstre introuvable dans votre collection" });
       return;
     }
 
@@ -133,11 +131,7 @@ const activateMonster = async (req: Request, res: Response): Promise<void> => {
     await Monster.activate(monsterId);
 
     const activeMonster = await Monster.findActiveByUserId(req.user!.id);
-
-    res.json({
-      message: "Monstre activé avec succès",
-      monster: activeMonster,
-    });
+    res.json({ message: "Monstre activé avec succès", monster: activeMonster });
   } catch (error) {
     console.error("Erreur activateMonster:", error);
     res.status(500).json({ message: "Erreur serveur" });
@@ -147,7 +141,6 @@ const activateMonster = async (req: Request, res: Response): Promise<void> => {
 const getMyInventory = async (req: Request, res: Response): Promise<void> => {
   try {
     const completed = await Monster.findCompletedByUserId(req.user!.id);
-
     res.json(completed);
   } catch (error) {
     console.error("Erreur getMyInventory:", error);

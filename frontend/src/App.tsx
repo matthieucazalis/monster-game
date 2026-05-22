@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Inventory from "./pages/inventory";
+import Inventory from "./pages/Inventory";
 import Shop from "./pages/Shop";
-import Settings from "./pages/settings";
+import Settings from "./pages/Settings";
 
 function App() {
   return (

@@ -1,3 +1,7 @@
+/* ================================
+   INVENTORY
+   ================================ */
+
 .inventory-wrap {
   min-height: 100vh;
   background: #fff;
@@ -8,7 +12,7 @@
 
 .inventory-content {
   flex: 1;
-  max-width: 800px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 32px 24px;
   width: 100%;
@@ -33,115 +37,165 @@
   color: #9f1239;
 }
 
-/* Sections */
-
+/* Section */
 .inventory-section {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 .inventory-section-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #000000;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
 }
 
 .inventory-section-count {
-  background: #f0f0f0;
-  color: #393939;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  padding: 1px 7px;
+  background: #f0f0f0;
+  color: #555;
   border-radius: 20px;
+  padding: 2px 10px;
 }
 
 .inventory-empty {
   font-size: 14px;
   color: #aaa;
-  padding: 16px 0;
+  margin: 0;
 }
 
-/* Liste */
+/* Grid pour monstres */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
 
+.inventory-card {
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.inventory-card:hover {
+  border-color: #aaa;
+  transform: translateY(-2px);
+}
+
+.inventory-card.active {
+  border-color: #1a1a1a;
+}
+
+.inventory-card.completed {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.inventory-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  background: #f7f7f7;
+  padding: 12px;
+}
+
+.inventory-card-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inventory-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.inventory-card-sub {
+  font-size: 12px;
+  color: #777;
+}
+
+/* List pour décorations */
 .inventory-list {
   display: flex;
   flex-direction: column;
-  border: 1px solid #eee;
-  border-radius: 4px;
-  overflow: hidden;
+  gap: 8px;
 }
 
 .inventory-row {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 16px;
-  border-bottom: 1px solid #eee;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   background: #fff;
-  transition: background 0.1s;
-}
-
-.inventory-row:last-child {
-  border-bottom: none;
-}
-
-.inventory-row:hover {
-  background: #fafafa;
-}
-
-.inventory-row.active {
-  background: #f9f9f9;
-  border-left: 3px solid #1a1a1a;
 }
 
 .inventory-row-img {
   width: 52px;
   height: 52px;
   object-fit: contain;
-  flex-shrink: 0;
   background: #f7f7f7;
   border-radius: 4px;
-  padding: 4px;
+  flex-shrink: 0;
 }
 
 .inventory-row-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 0;
+  gap: 2px;
 }
 
 .inventory-row-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
 }
 
 .inventory-row-sub {
   font-size: 12px;
-  color: #888;
+  color: #777;
 }
 
 .inventory-row-action {
   flex-shrink: 0;
 }
 
+/* Status badges */
 .inventory-status {
-  font-size: 12px;
-  font-weight: 600;
+  display: inline-block;
   padding: 3px 10px;
   border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .inventory-status.active {
-  background: #1a1a1a;
-  color: #fff;
+  background: #f0f0f0;
+  color: #1a1a1a;
+  border: 1px solid #ddd;
+}
+
+.inventory-status.completed {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .inventory-status.equipped {
@@ -151,18 +205,18 @@
 }
 
 .inventory-status.unequipped {
-  background: #f5f5f5;
-  color: #aaa;
-  border: 1px solid #e5e5e5;
+  background: #f7f7f7;
+  color: #777;
+  border: 1px solid #ddd;
 }
 
 .inventory-activate-btn {
-  padding: 6px 14px;
+  padding: 5px 12px;
   background: #1a1a1a;
   color: #fff;
   border: none;
   border-radius: 3px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   font-family: "DM Sans", sans-serif;
@@ -171,4 +225,136 @@
 
 .inventory-activate-btn:hover {
   background: #333;
+}
+
+/* ================================
+   POPUP
+   ================================ */
+
+.inv-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+}
+
+.inv-popup {
+  background: #fff;
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  padding: 32px;
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.inv-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  transition: background 0.15s;
+}
+
+.inv-popup-close:hover {
+  background: #efefef;
+  color: #1a1a1a;
+}
+
+.inv-popup-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+/* Popup monstre actif */
+.inv-popup-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+}
+
+.inv-popup-locked {
+  font-size: 14px;
+  color: #777;
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+}
+
+.inv-popup-levels {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 20px;
+}
+
+/* Popup monstre terminé */
+.inv-popup-stages {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.inv-popup-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.inv-popup-stage-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.inv-popup-stage-label {
+  font-size: 12px;
+  color: #777;
+  font-weight: 500;
+}
+
+.inv-popup-lore {
+  font-size: 14px;
+  color: #444;
+  text-align: center;
+  line-height: 1.7;
+  margin: 0;
+  padding: 16px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-style: italic;
 }

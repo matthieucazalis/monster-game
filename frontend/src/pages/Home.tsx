@@ -13,7 +13,7 @@ interface Monster {
   specie_id: number;
   level: number;
   stade: number;
-  last_update: string | null;
+  next_available_at: string | null;
   species_name: string;
   hunger_interval_hours: number;
   max_level: number;
@@ -39,6 +39,7 @@ export default function Home() {
   const [monster, setMonster] = useState<Monster | null>(null);
   const [decorations, setDecorations] = useState<Decoration[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const [coins, setCoins] = useState<number>(0);
   const [showTutorial, setShowTutorial] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -53,12 +54,25 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const fetchCoins = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCoins(data.coins);
+      }
+    } catch {}
+  };
+
   const fetchData = async () => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const [monsterRes, decorationsRes] = await Promise.all([
+      const [monsterRes, decorationsRes, userRes] = await Promise.all([
         fetch(`${API_URL}/api/monsters/me`, { headers }),
         fetch(`${API_URL}/api/decorations/my`, { headers }),
+        fetch(`${API_URL}/api/auth/me`, { headers }),
       ]);
 
       if (monsterRes.status === 401) {
@@ -72,12 +86,20 @@ export default function Home() {
         const data = await decorationsRes.json();
         setDecorations(data.filter((d: Decoration) => d.is_equipped));
       }
-
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        const parsed = JSON.parse(storedUser);
-        setUser(parsed);
-        if (parsed.is_first_login) setShowTutorial(true);
+      if (userRes.ok) {
+        const userData = await userRes.json();
+        setCoins(userData.coins);
+        setUser(userData);
+        if (userData.is_first_login) setShowTutorial(true);
+      } else {
+        // Fallback localStorage
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          setUser(parsed);
+          setCoins(parsed.coins ?? 0);
+          if (parsed.is_first_login) setShowTutorial(true);
+        }
       }
     } catch {
       setError("Erreur lors du chargement.");
@@ -97,10 +119,20 @@ export default function Home() {
         setError(data.message);
         return;
       }
+
+      // Mettre à jour les coins immédiatement
+      if (data.coinsEarned) {
+        setCoins((prev) => prev + data.coinsEarned);
+      }
+
       if (data.completed) {
         setMonster(null);
         alert(data.message);
-      } else setMonster(data.monster);
+        await fetchCoins(); // Resync depuis l'API
+      } else {
+        setMonster(data.monster);
+        await fetchCoins(); // Resync depuis l'API
+      }
     } catch {
       setError("Erreur lors du level up");
     }
@@ -127,7 +159,7 @@ export default function Home() {
         className="home-wrap"
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <p style={{ color: "#fff" }}>Chargement...</p>
+        <p style={{ color: "#777" }}>Chargement...</p>
       </div>
     );
 
@@ -138,7 +170,7 @@ export default function Home() {
       <div className="game-area">
         <div className="coins-badge">
           <div className="coins-icon">$</div>
-          {String(user?.coins ?? 0).padStart(3, "0")}
+          {String(coins).padStart(3, "0")}
         </div>
 
         {error && (
@@ -147,7 +179,6 @@ export default function Home() {
           </p>
         )}
 
-        {/* Monstre + Comptoir côte à côte */}
         <div className="game-main">
           <div className="monster-area">
             {monster ? (
@@ -159,11 +190,10 @@ export default function Home() {
                   flexDirection: "column",
                   alignItems: "center",
                   gap: 12,
-                  background: "rgba(255,255,255,0.85)",
+                  background: "#f7f7f7",
                   padding: 24,
                   borderRadius: 4,
                   border: "1px solid #ddd",
-                  backdropFilter: "blur(4px)",
                 }}
               >
                 <p style={{ fontSize: 15, color: "#777", margin: 0 }}>
@@ -196,7 +226,7 @@ export default function Home() {
       {showTutorial && (
         <div className="tutorial-overlay">
           <div className="tutorial-modal">
-            <h2>Bienvenue dans Monster Game ! </h2>
+            <h2>Bienvenue dans Monster Game ! 🎉</h2>
             <p>Le tutoriel arrive bientôt...</p>
             <button className="tutorial-btn" onClick={closeTutorial}>
               Commencer !

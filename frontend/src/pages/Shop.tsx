@@ -45,18 +45,29 @@ export default function Shop() {
       navigate("/login");
       return;
     }
-    const stored = localStorage.getItem("user");
-    if (stored) setCoins(JSON.parse(stored).coins ?? 0);
-    fetchData();
+    fetchAll();
   }, []);
 
-  const fetchData = async () => {
+  const fetchCoins = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCoins(data.coins);
+      }
+    } catch {}
+  };
+
+  const fetchAll = async () => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
-      const [speciesRes, decoRes, myDecoRes] = await Promise.all([
+      const [speciesRes, decoRes, myDecoRes, meRes] = await Promise.all([
         fetch(`${API_URL}/api/species`, { headers }),
         fetch(`${API_URL}/api/decorations`, { headers }),
         fetch(`${API_URL}/api/decorations/my`, { headers }),
+        fetch(`${API_URL}/api/auth/me`, { headers }),
       ]);
       if (speciesRes.ok) setSpecies(await speciesRes.json());
       if (decoRes.ok) setDecorations(await decoRes.json());
@@ -64,21 +75,12 @@ export default function Shop() {
         const data: MyDecoration[] = await myDecoRes.json();
         setOwnedDecoIds(data.map((d) => d.id));
       }
-    } catch (err) {
-      console.error(err);
+      if (meRes.ok) {
+        const me = await meRes.json();
+        setCoins(me.coins);
+      }
+    } catch {
       setError("Erreur lors du chargement de la boutique.");
-    }
-}
-
-  const updateCoins = (spent: number) => {
-    const newCoins = coins - spent;
-    setCoins(newCoins);
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...JSON.parse(stored), coins: newCoins }),
-      );
     }
   };
 
@@ -95,9 +97,9 @@ export default function Shop() {
         setError(data.message);
         return;
       }
-      updateCoins(s.unlock_cost);
       setMessage(data.message);
-      fetchData();
+      await fetchCoins();
+      navigate("/game");
     } catch {
       setError("Erreur lors de l'achat.");
     }
@@ -116,9 +118,9 @@ export default function Shop() {
         setError(data.message);
         return;
       }
-      updateCoins(d.price);
       setOwnedDecoIds((prev) => [...prev, d.id]);
       setMessage(data.message);
+      await fetchCoins();
     } catch {
       setError("Erreur lors de l'achat.");
     }
