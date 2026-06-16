@@ -1,205 +1,355 @@
+/* ============================================================
+   SHOP — Windows 98 / SpaceHey
+   ============================================================ */
+
+.shop-wrap,
+.shop-wrap * {
+  /* Force l'écriture Sans-Serif standard et propre de ta navbar sur toute la page */
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+}
+
 .shop-wrap {
   min-height: 100vh;
-  background: #fff;
-  font-family: "DM Sans", sans-serif;
-  display: flex;
-  flex-direction: column;
+  background: #008080;
 }
 
-.shop-content {
-  flex: 1;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 24px;
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+.shop-desktop {
   width: 100%;
+  max-width: 1450px;
+  margin: 24px auto;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
-.shop-header {
+/* ============================================================
+   MAIN WINDOW
+   ============================================================ */
+
+.shop-window {
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
+}
+
+/* ============================================================
+   TITLEBAR
+   ============================================================ */
+
+.shop-titlebar {
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  padding: 0 6px;
+  background: linear-gradient(to right, #000080, #1084d0);
 }
 
-.shop-title {
-  font-size: 24px;
+.shop-titlebar-label {
+  font-size: 17px;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
+  color: #ffffff;
 }
 
-.shop-notice {
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-size: 14px;
-  margin-bottom: 16px;
+.shop-titlebar-btns {
+  display: flex;
+  gap: 3px;
 }
 
-.shop-notice.success {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
+.shop-win-btn {
+  width: 22px;
+  height: 20px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.shop-notice.error {
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-  color: #9f1239;
+.shop-win-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  padding: 1px 0 0 1px;
 }
+
+/* ============================================================
+   BODY
+   ============================================================ */
+
+.shop-window-body {
+  padding: 18px;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+
+.shop-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   TABS
+   ============================================================ */
 
 .shop-tabs {
   display: flex;
   gap: 4px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 4px;
-  width: fit-content;
-  margin-bottom: 28px;
 }
 
 .shop-tab {
-  padding: 8px 20px;
-  border-radius: 3px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #555;
+  padding: 6px 16px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: all 0.15s;
-  font-family: "DM Sans", sans-serif;
-}
-
-.shop-tab:hover {
-  color: #1a1a1a;
-  background: #efefef;
 }
 
 .shop-tab.active {
-  background: #fff;
-  color: #1a1a1a;
-  border: 1px solid #ccc;
-  font-weight: 600;
+  border-color: #404040 #ffffff #ffffff #404040;
+  background: #dfdfdf;
 }
+
+/* ============================================================
+   NOTICES
+   ============================================================ */
+
+.shop-notices {
+  margin-bottom: 18px;
+}
+
+.shop-notice {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border-style: solid;
+  border-width: 2px;
+  margin: 0 0 8px 0;
+}
+
+.shop-notice.success {
+  background: #d8ffd8;
+  border-color: #ffffff #006000 #006000 #ffffff;
+  color: #006000;
+}
+
+.shop-notice.error {
+  background: #ffd8d8;
+  border-color: #ffffff #800000 #800000 #ffffff;
+  color: #800000;
+}
+
+/* ============================================================
+   GRID
+   ============================================================ */
 
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
 }
+
+/* ============================================================
+   CARD
+   ============================================================ */
 
 .shop-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  transition: border-color 0.15s;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
 }
 
-.shop-card:hover {
-  border-color: #aaa;
+/* ============================================================
+   CARD TITLEBAR
+   ============================================================ */
+
+.shop-card-titlebar {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  background: linear-gradient(to right, #808080, #b5b5b5);
+}
+
+.shop-card-titlebar span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.shop-card-btns {
+  display: flex;
+  gap: 2px;
+}
+
+.shop-card-btn {
+  width: 14px;
+  height: 12px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  font-size: 7px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   IMAGE
+   ============================================================ */
+
+.shop-card-image-wrap {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d4d4d4;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+  margin: 12px;
 }
 
 .shop-card-img {
-  width: 100%;
-  height: 160px;
+  width: 80%;
+  height: 80%;
   object-fit: contain;
-  background: #f7f7f7;
-  padding: 16px;
 }
 
+/* ============================================================
+   CARD BODY
+   ============================================================ */
+
 .shop-card-body {
-  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1;
+  gap: 12px;
+  padding: 0 12px 12px;
 }
 
 .shop-card-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1a1a1a;
   margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
 }
 
-.shop-card-info {
-  font-size: 12px;
-  color: #777;
-  margin: 0;
+.shop-card-description,
+.shop-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: #404040;
 }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
 
 .shop-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;
-  padding-top: 10px;
+  gap: 12px;
+  margin-top: 4px;
 }
 
 .shop-price {
   font-size: 14px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #000080;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.shop-buy-btn,
+.shop-owned-badge {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .shop-buy-btn {
-  padding: 6px 14px;
-  background: #1a1a1a;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  font-size: 13px;
-  font-weight: 500;
+  background: #c0c0c0;
+  border-color: #ffffff #404040 #404040 #ffffff;
   cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: background 0.15s;
 }
 
-.shop-buy-btn:hover:not(.disabled) {
-  background: #333;
+.shop-buy-btn:active:not(.disabled) {
+  border-color: #404040 #ffffff #ffffff #404040;
 }
 
 .shop-buy-btn.disabled {
-  background: #ccc;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-.shop-badge {
-  padding: 4px 10px;
-  border-radius: 3px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+.shop-owned-badge {
+  background: #d8ffd8;
+  border-color: #ffffff #006000 #006000 #ffffff;
+  color: #006000;
 }
 
-.coins-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 6px 14px 6px 6px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #1a1a1a;
-}
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
-.coins-icon {
-  width: 30px;
-  height: 30px;
-  background: #1a1a1a;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
+@media (max-width: 768px) {
+  .shop-desktop {
+    padding: 0 10px;
+  }
+
+  .shop-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .shop-tabs {
+    width: 100%;
+  }
+
+  .shop-tab {
+    flex: 1;
+  }
+
+  .shop-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-card-image-wrap {
+    height: 180px;
+  }
 }

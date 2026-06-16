@@ -1,23 +1,68 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../pages/style/Navbar.css";
+
+const API_URL =
+  (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [coins, setCoins] = useState<number>(0);
+  const token = localStorage.getItem("token");
+
+  // Fonction autonome pour récupérer la monnaie
+  const fetchCoins = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCoins(data.coins);
+      } else {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          setCoins(parsed.coins ?? 0);
+        }
+      }
+    } catch {}
+  };
+
+  useEffect(() => {
+    fetchCoins();
+
+    // Écoute un événement personnalisé pour se mettre à jour à la volée (ex: lors d'un level up)
+    window.addEventListener("update-coins", fetchCoins);
+    return () => window.removeEventListener("update-coins", fetchCoins);
+  }, [location.pathname]);
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="navbar">
+      {/* COINS */}
+      <div className="coins-badge">
+        <div className="coins-icon">
+          <img
+            src="/images/money-icon.png"
+            alt="Coins" // Correction ici : c'était écrit "Settings"
+            width="35"
+            height="35"
+          />
+        </div>
+        {String(coins).padStart(3, "0")}
+      </div>
+
       <div className="navbar-center">
         {/* HOME */}
         <button
           className={`navbar-item ${isActive("/game") ? "active" : ""}`}
           onClick={() => navigate("/game")}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-          </svg>
+          <img src="/images/home-icon.png" alt="Home" width="25" height="25" />
           Home
         </button>
 
@@ -26,9 +71,12 @@ export default function Navbar() {
           className={`navbar-item ${isActive("/inventory") ? "active" : ""}`}
           onClick={() => navigate("/inventory")}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 6h18v2H3V6zm0 4h18v10H3V10z" />
-          </svg>
+          <img
+            src="/images/inventory-icon.png"
+            alt="Inventaire"
+            width="25"
+            height="25"
+          />
           Inventaire
         </button>
 
@@ -37,32 +85,24 @@ export default function Navbar() {
           className={`navbar-item ${isActive("/shop") ? "active" : ""}`}
           onClick={() => navigate("/shop")}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 9h-1V6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v3H5c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zm-7-3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm3.586 7H8v3h8v-3z" />
-          </svg>
+          <img
+            src="/images/shop-icon.png"
+            alt="Boutique"
+            width="25"
+            height="25"
+          />
           Boutique
         </button>
       </div>
 
       {/* SETTINGS */}
       <button className="navbar-settings" onClick={() => navigate("/settings")}>
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-          <path
-            d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 
-          0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.02 
-          7.02 0 0 0-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 
-          0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 
-          0 0 0-.59.22L2.74 8.87a.48.48 0 0 0 .12.61l2.03 
-          1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 
-          1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.37 
-          1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 
-          0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.57 
-          1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 
-          0 0 0-.12-.61l-2.01-1.58zM12 
-          15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 
-          3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
-          />
-        </svg>
+        <img
+          src="/images/settings-icon.png"
+          alt="Settings"
+          width="35"
+          height="35"
+        />
       </button>
     </nav>
   );

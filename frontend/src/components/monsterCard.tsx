@@ -74,35 +74,48 @@ export default function MonsterCard({ monster, onLevelUp }: MonsterCardProps) {
 
   return (
     <div className="monster-display">
-      <div
-        className={`monster-image-wrap ${!canLevelUp ? "disabled" : ""}`}
-        onClick={canLevelUp ? onLevelUp : undefined}
-        title={
-          canLevelUp
-            ? "Cliquez pour monter de niveau !"
-            : `Attendez encore ${formatTime(remaining)}`
-        }
-      >
-        <img
-          src={imageUrl}
-          alt={monster.species_name}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/species/placeholder.png";
-          }}
-        />
+      {/* Barre de titre Windows 98 */}
+      <div className="monster-titlebar">
+        <span className="monster-titlebar-label">{monster.species_name}</span>
+        <div className="monster-titlebar-btns">
+          <button className="monster-win-btn">_</button>
+          <button className="monster-win-btn">□</button>
+          <button className="monster-win-btn">✕</button>
+        </div>
       </div>
 
-      <hr className="monster-divider" />
-      <h2 className="monster-name">{monster.species_name}</h2>
+      {/* Corps de la fenêtre */}
+      <div className="monster-body">
+        <div
+          className={`monster-image-wrap ${!canLevelUp ? "disabled" : ""}`}
+          onClick={canLevelUp ? onLevelUp : undefined}
+          title={
+            canLevelUp
+              ? "Cliquez pour monter de niveau !"
+              : `Attendez encore ${formatTime(remaining)}`
+          }
+        >
+          <img
+            src={imageUrl}
+            alt={monster.species_name}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "/species/placeholder.png";
+            }}
+          />
+        </div>
 
-      <div className="timer-bar-wrap">
-        <div className="timer-bar-fill" style={{ width: `${progress}%` }} />
-        <span className="timer-bar-label">{formatTime(remaining)}</span>
-      </div>
+        <hr className="monster-divider" />
+        <h2 className="monster-name">{monster.species_name}</h2>
 
-      <div className="monster-stats-row">
-        <div className="monster-stat">Level : {monster.level}</div>
-        <div className="monster-stat">Stade : {monster.stade}/3</div>
+        <div className="timer-bar-wrap">
+          <div className="timer-bar-fill" style={{ width: `${progress}%` }} />
+          <span className="timer-bar-label">{formatTime(remaining)}</span>
+        </div>
+
+        <div className="monster-stats-row">
+          <div className="monster-stat">Level : {monster.level}</div>
+          <div className="monster-stat">Stade : {monster.stade}/3</div>
+        </div>
       </div>
     </div>
   );

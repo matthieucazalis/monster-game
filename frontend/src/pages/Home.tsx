@@ -35,12 +35,18 @@ interface User {
   is_first_login: boolean;
 }
 
+function applyTheme() {
+  const bg = localStorage.getItem("ui_bg_color") ?? "#008080";
+  const accent = localStorage.getItem("ui_accent_color") ?? "#000080";
+  document.body.style.setProperty("--win-bg", bg);
+  document.body.style.setProperty("--win-accent", accent);
+}
+
 export default function Home() {
   const navigate = useNavigate();
   const [monster, setMonster] = useState<Monster | null>(null);
   const [allDecorations, setAllDecorations] = useState<Decoration[]>([]);
   const [user, setUser] = useState<User | null>(null);
-  const [coins, setCoins] = useState<number>(0);
   const [showTutorial, setShowTutorial] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -48,24 +54,13 @@ export default function Home() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    applyTheme();
     if (!token) {
       navigate("/login");
       return;
     }
     fetchData();
   }, []);
-
-  const fetchCoins = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/auth/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setCoins(data.coins);
-      }
-    } catch {}
-  };
 
   const fetchDecorations = async () => {
     try {
@@ -95,7 +90,6 @@ export default function Home() {
       if (decorationsRes.ok) setAllDecorations(await decorationsRes.json());
       if (userRes.ok) {
         const userData = await userRes.json();
-        setCoins(userData.coins);
         setUser(userData);
         if (userData.is_first_login) setShowTutorial(true);
       } else {
@@ -103,7 +97,6 @@ export default function Home() {
         if (storedUser) {
           const parsed = JSON.parse(storedUser);
           setUser(parsed);
-          setCoins(parsed.coins ?? 0);
           if (parsed.is_first_login) setShowTutorial(true);
         }
       }
@@ -125,14 +118,16 @@ export default function Home() {
         setError(data.message);
         return;
       }
-      if (data.coinsEarned) setCoins((prev) => prev + data.coinsEarned);
+
+      // On prévient la Navbar que l'argent a changé pour qu'elle se recharge
+      window.dispatchEvent(new Event("update-coins"));
+
       if (data.completed) {
         setMonster(null);
         alert(data.message);
       } else {
         setMonster(data.monster);
       }
-      await fetchCoins();
     } catch {
       setError("Erreur lors du level up");
     }
@@ -153,7 +148,6 @@ export default function Home() {
     } catch {}
   };
 
-  // Décos équipées (pour l'affichage sur le comptoir)
   const equippedDecorations = allDecorations.filter((d) => d.is_equipped);
 
   if (loading)
@@ -162,7 +156,9 @@ export default function Home() {
         className="home-wrap"
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <p style={{ color: "#777" }}>Chargement...</p>
+        <p style={{ color: "#fff", fontFamily: "Arial", fontSize: 12 }}>
+          Chargement...
+        </p>
       </div>
     );
 
@@ -171,13 +167,10 @@ export default function Home() {
       <Navbar />
 
       <div className="game-area">
-        <div className="coins-badge">
-          <div className="coins-icon">$</div>
-          {String(coins).padStart(3, "0")}
-        </div>
+        {/* L'ancien badge des coins a été supprimé d'ici */}
 
         {error && (
-          <p style={{ color: "#a32d2d", fontSize: 13, margin: "0 0 0 16px" }}>
+          <p style={{ color: "#ff0000", fontSize: 11, fontFamily: "Arial" }}>
             {error}
           </p>
         )}
@@ -187,33 +180,9 @@ export default function Home() {
             {monster ? (
               <MonsterCard monster={monster} onLevelUp={handleLevelUp} />
             ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 12,
-                  background: "#f7f7f7",
-                  padding: 24,
-                  borderRadius: 4,
-                  border: "1px solid #ddd",
-                }}
-              >
-                <p style={{ fontSize: 15, color: "#777", margin: 0 }}>
-                  Aucun monstre actif.
-                </p>
-                <button
-                  onClick={() => navigate("/shop")}
-                  style={{
-                    padding: "8px 20px",
-                    borderRadius: 4,
-                    background: "#1a1a1a",
-                    color: "#fff",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: 14,
-                  }}
-                >
+              <div className="no-monster-panel">
+                <p>Aucun monstre actif.</p>
+                <button className="win98-btn" onClick={() => navigate("/shop")}>
                   Obtenir un monstre →
                 </button>
               </div>
@@ -233,11 +202,13 @@ export default function Home() {
       {showTutorial && (
         <div className="tutorial-overlay">
           <div className="tutorial-modal">
-            <h2>Bienvenue dans Monster Game ! 🎉</h2>
-            <p>Le tutoriel arrive bientôt...</p>
-            <button className="tutorial-btn" onClick={closeTutorial}>
-              Commencer !
-            </button>
+            <div className="tutorial-modal-body">
+              <h2>Bienvenue dans Monster Game !</h2>
+              <p>Le tutoriel arrive bientôt...</p>
+              <button className="tutorial-btn" onClick={closeTutorial}>
+                Commencer !
+              </button>
+            </div>
           </div>
         </div>
       )}

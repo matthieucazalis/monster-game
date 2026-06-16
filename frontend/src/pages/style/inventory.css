@@ -1,360 +1,603 @@
-/* ================================
+/* =========================================================
    INVENTORY
-   ================================ */
+   ========================================================= */
 
-.inventory-wrap {
+@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --win-bg: #008080;
+
+  --win-silver: #c0c0c0;
+  --win-light: #dfdfdf;
+  --win-dark: #808080;
+
+  --win-blue-1: #0c1058;
+  --win-blue-2: #2b8ad6;
+}
+
+/* ========================================================= */
+
+.inventory-page {
   min-height: 100vh;
-  background: #fff;
-  font-family: "DM Sans", sans-serif;
+  background: var(--win-bg);
+
+  font-family: "Libre Franklin", sans-serif;
+}
+
+/* ========================================================= */
+/* IMPORTANT : ne plus toucher à nav */
+/* ========================================================= */
+
+.inventory-page nav,
+.inventory-page .navbar,
+.inventory-page header {
+  width: auto;
+  max-width: none;
+}
+
+/* ========================================================= */
+
+.inventory-container {
+  width: min(1380px, calc(100% - 40px));
+
+  margin: 24px auto;
+
   display: flex;
   flex-direction: column;
+  gap: 28px;
 }
 
-.inventory-content {
-  flex: 1;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 24px;
-  width: 100%;
+/* =========================================================
+   WINDOWS
+   ========================================================= */
+
+.inventory-window,
+.inventory-card,
+.inv-popup,
+.loading-window {
+  background: var(--win-silver);
+
+  border-style: outset;
+  border-width: 2px;
+  border-color: #fff #000 #000 #fff;
 }
 
-.inventory-notice {
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-size: 14px;
-  margin-bottom: 16px;
+/* =========================================================
+   TITLEBAR
+   ========================================================= */
+
+.inventory-titlebar,
+.inv-popup-titlebar,
+.inventory-card-titlebar {
+  background-image: linear-gradient(
+    to right,
+    var(--win-blue-1),
+    var(--win-blue-2)
+  );
 }
 
-.inventory-notice.success {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-}
+/* ========================================================= */
 
-.inventory-notice.error {
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-  color: #9f1239;
-}
+.inventory-titlebar,
+.inv-popup-titlebar {
+  height: 34px;
 
-/* Section */
-.inventory-section {
-  margin-bottom: 48px;
-}
-
-.inventory-section-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+
+  padding: 0 6px;
 }
 
-.inventory-section-count {
+/* ========================================================= */
+
+.inventory-titlebar-label,
+.inv-popup-titlebar-label {
+  color: white;
+
   font-size: 13px;
-  font-weight: 600;
-  background: #f0f0f0;
-  color: #555;
-  border-radius: 20px;
-  padding: 2px 10px;
+  font-weight: 700;
 }
 
-.inventory-empty {
-  font-size: 14px;
-  color: #aaa;
-  margin: 0;
+/* ========================================================= */
+
+.inventory-titlebar-btns {
+  display: flex;
+  gap: 3px;
 }
 
-/* Grid pour monstres */
+/* ========================================================= */
+
+.inventory-win-btn,
+.inv-popup-close,
+.mini-btn {
+  background: var(--win-silver);
+
+  border-style: outset;
+  border-width: 2px;
+  border-color: #fff #000 #000 #fff;
+
+  color: black;
+
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================================= */
+
+.inventory-win-btn,
+.inv-popup-close {
+  width: 22px;
+  height: 20px;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+/* ========================================================= */
+
+.mini-btn {
+  width: 16px;
+  height: 14px;
+
+  font-size: 9px;
+}
+
+/* ========================================================= */
+
+.inventory-win-btn:active,
+.inv-popup-close:active {
+  border-style: inset;
+}
+
+/* ========================================================= */
+
+.inventory-body {
+  padding: 18px;
+}
+
+/* =========================================================
+   NOTICE INLINE
+   ========================================================= */
+
+.inventory-inline-notice {
+  margin-bottom: 16px;
+
+  padding: 10px 14px;
+
+  background: var(--win-silver);
+
+  border-style: inset;
+  border-width: 2px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inventory-inline-notice.success {
+  color: #007000;
+}
+
+.inventory-inline-notice.error {
+  color: #a00000;
+}
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
 .inventory-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
+
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+  gap: 20px;
 }
 
+/* =========================================================
+   CARD
+   ========================================================= */
+
 .inventory-card {
-  border: 1.5px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    transform 0.15s;
+
+  transition: 0.1s;
 }
 
 .inventory-card:hover {
-  border-color: #aaa;
   transform: translateY(-2px);
 }
 
-.inventory-card.active {
-  border-color: #1a1a1a;
+/* ========================================================= */
+
+.inventory-card-titlebar {
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 4px;
 }
 
-.inventory-card.completed {
-  border-color: #bbf7d0;
-  background: #f0fdf4;
+.inventory-card.completed .inventory-card-titlebar {
+  background-image: linear-gradient(to right, #106010, #28a428);
 }
+
+.inventory-card:not(.active):not(.completed) .inventory-card-titlebar {
+  background-image: linear-gradient(to right, #5c5c5c, #969696);
+}
+
+/* ========================================================= */
+
+.inventory-card-titlebar span {
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========================================================= */
+
+.inventory-card-mini-btns {
+  display: flex;
+  gap: 2px;
+}
+
+/* ========================================================= */
 
 .inventory-card-img {
   width: 100%;
-  height: 140px;
+  height: 220px;
+
   object-fit: contain;
-  background: #f7f7f7;
-  padding: 12px;
+
+  background: #d4d4d4;
+
+  padding: 14px;
+
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
 }
+
+/* ========================================================= */
 
 .inventory-card-body {
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+  padding: 14px;
 
-.inventory-card-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-.inventory-card-sub {
-  font-size: 12px;
-  color: #777;
-}
-
-/* List pour décorations */
-.inventory-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.inventory-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #fff;
+/* ========================================================= */
+
+.inventory-card-name {
+  font-size: 15px;
+  font-weight: 700;
 }
 
-.inventory-row-img {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  background: #f7f7f7;
-  border-radius: 4px;
-  flex-shrink: 0;
+/* ========================================================= */
+
+.inventory-card-sub {
+  font-size: 13px;
+  color: #555;
 }
 
-.inventory-row-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+/* ========================================================= */
 
-.inventory-row-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.inventory-row-sub {
-  font-size: 12px;
-  color: #777;
-}
-
-.inventory-row-action {
-  flex-shrink: 0;
-}
-
-/* Status badges */
 .inventory-status {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 3px;
+  width: fit-content;
+
+  padding: 5px 12px;
+
+  border-style: outset;
+  border-width: 2px;
+
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .inventory-status.active {
-  background: #f0f0f0;
-  color: #1a1a1a;
-  border: 1px solid #ddd;
+  background: #d8d8ff;
 }
 
 .inventory-status.completed {
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: #d8ffd8;
 }
 
 .inventory-status.equipped {
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: #d8ffd8;
 }
 
 .inventory-status.unequipped {
-  background: #f7f7f7;
-  color: #777;
-  border: 1px solid #ddd;
+  background: #e6e6e6;
 }
+
+/* ========================================================= */
 
 .inventory-activate-btn {
-  padding: 5px 12px;
-  background: #1a1a1a;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
+  width: fit-content;
+
+  padding: 6px 16px;
+
+  background: var(--win-silver);
+
+  border-style: outset;
+  border-width: 2px;
+  border-color: #fff #000 #000 #fff;
+
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
+
   cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: background 0.15s;
 }
 
-.inventory-activate-btn:hover {
-  background: #333;
+.inventory-activate-btn:active {
+  border-style: inset;
 }
 
-/* ================================
+/* =========================================================
+   DECORATIONS
+   ========================================================= */
+
+.inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================================= */
+
+.inventory-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 12px;
+
+  background: var(--win-silver);
+
+  border-style: outset;
+  border-width: 2px;
+}
+
+/* ========================================================= */
+
+.inventory-row-img {
+  width: 70px;
+  height: 70px;
+
+  object-fit: contain;
+
+  background: #d4d4d4;
+
+  padding: 8px;
+
+  border-style: inset;
+  border-width: 2px;
+}
+
+/* ========================================================= */
+
+.inventory-row-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ========================================================= */
+
+.inventory-row-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ========================================================= */
+
+.inventory-row-sub {
+  font-size: 13px;
+  color: #555;
+}
+
+/* =========================================================
    POPUP
-   ================================ */
+   ========================================================= */
 
 .inv-popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+
+  background: rgba(0, 0, 0, 0.45);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+
   padding: 24px;
+
+  z-index: 999;
 }
 
+/* ========================================================= */
+
 .inv-popup {
-  background: #fff;
-  border: 1.5px solid #ddd;
-  border-radius: 4px;
-  padding: 32px;
-  max-width: 560px;
   width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  max-width: 760px;
+
   max-height: 90vh;
+
   overflow-y: auto;
 }
 
-.inv-popup-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  width: 30px;
-  height: 30px;
+/* ========================================================= */
+
+.inv-popup-body {
+  padding: 24px;
+
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 13px;
-  color: #555;
-  transition: background 0.15s;
+  gap: 20px;
 }
 
-.inv-popup-close:hover {
-  background: #efefef;
-  color: #1a1a1a;
-}
+/* ========================================================= */
 
 .inv-popup-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-size: 28px;
+  font-weight: 800;
+
   margin: 0;
-  text-align: center;
 }
 
-/* Popup monstre actif */
+/* ========================================================= */
+
 .inv-popup-img {
-  width: 180px;
-  height: 180px;
+  width: 340px;
+  height: 340px;
+
   object-fit: contain;
+
+  background: #d4d4d4;
+
+  padding: 18px;
+
+  border-style: inset;
+  border-width: 2px;
 }
+
+/* ========================================================= */
 
 .inv-popup-locked {
   font-size: 14px;
-  color: #777;
-  text-align: center;
-  margin: 0;
+  color: #555;
+
   font-style: italic;
 }
 
+/* ========================================================= */
+
 .inv-popup-levels {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   padding: 8px 20px;
+
+  background: #d8d8ff;
+
+  border-style: outset;
+  border-width: 2px;
+
+  font-size: 13px;
+  font-weight: 700;
 }
 
-/* Popup monstre terminé */
+/* ========================================================= */
+
 .inv-popup-stages {
   display: flex;
-  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 20px;
 }
+
+/* ========================================================= */
 
 .inv-popup-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
+/* ========================================================= */
+
 .inv-popup-stage-img {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
+
   object-fit: contain;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 8px;
+
+  background: #d4d4d4;
+
+  padding: 10px;
+
+  border-style: inset;
+  border-width: 2px;
 }
+
+/* ========================================================= */
 
 .inv-popup-stage-label {
   font-size: 12px;
-  color: #777;
-  font-weight: 500;
+  font-weight: 700;
 }
 
+/* ========================================================= */
+
 .inv-popup-lore {
-  font-size: 14px;
-  color: #444;
-  text-align: center;
+  width: 100%;
+
+  padding: 18px;
+
+  background: #ececec;
+
+  border-style: inset;
+  border-width: 2px;
+
   line-height: 1.7;
-  margin: 0;
-  padding: 16px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+
+  text-align: center;
+
   font-style: italic;
+}
+
+/* ========================================================= */
+
+.inventory-empty {
+  font-size: 13px;
+  color: #555;
+
+  font-style: italic;
+}
+
+/* ========================================================= */
+
+.loading-window {
+  max-width: 500px;
+  margin: 80px auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .inventory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-card-img {
+    height: 180px;
+  }
+
+  .inv-popup-img {
+    width: 220px;
+    height: 220px;
+  }
+
+  .inv-popup-stage-img {
+    width: 110px;
+    height: 110px;
+  }
 }

@@ -19,7 +19,7 @@ export default function Login() {
   const handleSubmit = async () => {
     setError("");
     if (!form.email || !form.password) {
-      setError("Please fill all fields.");
+      setError("Veuillez remplir tous les champs.");
       return;
     }
 
@@ -34,7 +34,7 @@ export default function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message ?? "Login failed.");
+        setError(data.message ?? "Échec de la connexion.");
         return;
       }
 
@@ -42,7 +42,7 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/game");
     } catch {
-      setError("Server error. Please try again.");
+      setError("Erreur serveur. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -50,44 +50,97 @@ export default function Login() {
 
   return (
     <div className="auth-wrap">
-      <h1 className="auth-title">MONSTER GAME</h1>
-      <p className="auth-subtitle">Un tamagotchi suspicieux.</p>
-
-      <div className="auth-card-single">
-        <div className="auth-field">
-          <label className="auth-label">Email</label>
-          <input
-            className="auth-input"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-          />
+      {/* Fenêtre de session Windows 98 */}
+      <div className="auth-window">
+        <div className="auth-titlebar">
+          <span className="auth-titlebar-label">
+            Ouverture de session Windows
+          </span>
+          <div className="auth-titlebar-btns">
+            <button className="auth-win-btn">?</button>
+            <button className="auth-win-btn" onClick={() => navigate("/")}>
+              ✕
+            </button>
+          </div>
         </div>
 
-        <div className="auth-field">
-          <label className="auth-label">Mot de passe</label>
-          <input
-            className="auth-input"
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-          />
+        <div className="auth-window-body">
+          {/* En-tête avec illustration rétro */}
+          <div className="auth-header-zone">
+            <div className="auth-retro-icon" aria-hidden="true">
+              🔑
+            </div>
+            <div className="auth-welcome-text">
+              <h1 className="auth-title">MONSTER GAME</h1>
+              <p className="auth-subtitle">
+                Tapez votre identifiant et votre mot de passe pour accéder à
+                votre espace de jeu Tamagotchi.
+              </p>
+            </div>
+          </div>
+
+          <hr className="auth-separator" />
+
+          {/* Formulaire & Actions côte à côte (Style Windows classique) */}
+          <div className="auth-main-layout">
+            <div className="auth-form-fields">
+              <div className="auth-field">
+                <label className="auth-label" htmlFor="email">
+                  Nom d'utilisateur (Email) :
+                </label>
+                <input
+                  id="email"
+                  className="auth-input"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  autoFocus
+                />
+              </div>
+
+              <div className="auth-field">
+                <label className="auth-label" htmlFor="password">
+                  Mot de passe :
+                </label>
+                <input
+                  id="password"
+                  className="auth-input"
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {error && <p className="auth-error">{error}</p>}
+
+              <p className="auth-nav-text">
+                Nouveau membre ?{" "}
+                <a href="/register" className="auth-link">
+                  Créer un nouveau compte joueur...
+                </a>
+              </p>
+            </div>
+
+            {/* Colonne des boutons de commande à droite */}
+            <div className="auth-action-buttons">
+              <button
+                className="auth-btn default"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? "Attente..." : "OK"}
+              </button>
+              <button
+                className="auth-btn"
+                onClick={() => setForm({ email: "", password: "" })}
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
         </div>
-
-        <button className="auth-btn" onClick={handleSubmit} disabled={loading}>
-          {loading ? "Connexion…" : "Clique ici pour te connecter !"}
-        </button>
-
-        {error && <p className="auth-error">{error}</p>}
-
-        <p className="auth-nav-text">
-          Nouveau membre ?{" "}
-          <a href="/register" className="auth-link">
-            Clique ici pour créer un compte !
-          </a>{" "}
-        </p>
       </div>
     </div>
   );

@@ -125,72 +125,57 @@ export default function DecorationShelf({
           onClick={() => setSelectedSlot(null)}
         >
           <div className="shelf-popup" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="shelf-popup-close"
-              onClick={() => setSelectedSlot(null)}
-            >
-              ✕
-            </button>
-            <h3 className="shelf-popup-title">Slot {selectedSlot}</h3>
+            {/* Barre de titre Win98 */}
+            <div className="shelf-popup-titlebar">
+              <span className="shelf-popup-titlebar-label">
+                📦 Slot {selectedSlot}
+              </span>
+              <button
+                className="shelf-popup-close"
+                onClick={() => setSelectedSlot(null)}
+              >
+                ✕
+              </button>
+            </div>
 
-            {/* Déco actuellement dans ce slot */}
-            {currentSlotDeco && (
-              <div className="shelf-popup-current">
-                <p className="shelf-popup-label">Actuellement :</p>
-                <div className="shelf-popup-item active">
-                  <img
-                    src={currentSlotDeco.image_url}
-                    alt={currentSlotDeco.name}
-                  />
-                  <span>{currentSlotDeco.name}</span>
-                  <button
-                    className="shelf-popup-remove"
-                    onClick={() =>
-                      handleRemove(currentSlotDeco.user_decoration_id)
-                    }
-                    disabled={loading}
-                  >
-                    Retirer
-                  </button>
+            <div className="shelf-popup-body">
+              <h3 className="shelf-popup-title">Slot {selectedSlot}</h3>
+
+              {/* Déco actuellement dans ce slot */}
+              {currentSlotDeco && (
+                <div className="shelf-popup-current">
+                  <p className="shelf-popup-label">Actuellement :</p>
+                  <div className="shelf-popup-item active">
+                    <img
+                      src={currentSlotDeco.image_url}
+                      alt={currentSlotDeco.name}
+                    />
+                    <span>{currentSlotDeco.name}</span>
+                    <button
+                      className="shelf-popup-remove"
+                      onClick={() =>
+                        handleRemove(currentSlotDeco.user_decoration_id)
+                      }
+                      disabled={loading}
+                    >
+                      Retirer
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Décos disponibles à placer */}
-            <p className="shelf-popup-label">
-              {unplacedDecorations.length === 0 && !currentSlotDeco
-                ? "Aucune décoration disponible."
-                : "Choisir une décoration :"}
-            </p>
+              {/* Décos disponibles à placer */}
+              <p className="shelf-popup-label">
+                {unplacedDecorations.length === 0 && !currentSlotDeco
+                  ? "Aucune décoration disponible."
+                  : "Choisir une décoration :"}
+              </p>
 
-            <div className="shelf-popup-list">
-              {unplacedDecorations.map((d) => (
-                <div
-                  key={d.user_decoration_id}
-                  className="shelf-popup-item"
-                  onClick={() =>
-                    !loading && handlePlace(d.user_decoration_id, selectedSlot)
-                  }
-                >
-                  <img
-                    src={d.image_url}
-                    alt={d.name}
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        "/images/placeholder.png";
-                    }}
-                  />
-                  <span>{d.name}</span>
-                </div>
-              ))}
-
-              {/* Décos équipées dans d'autres slots (pour déplacer) */}
-              {decorations
-                .filter((d) => d.position_x !== selectedSlot)
-                .map((d) => (
+              <div className="shelf-popup-list">
+                {unplacedDecorations.map((d) => (
                   <div
                     key={d.user_decoration_id}
-                    className="shelf-popup-item other-slot"
+                    className="shelf-popup-item"
                     onClick={() =>
                       !loading &&
                       handlePlace(d.user_decoration_id, selectedSlot)
@@ -205,12 +190,38 @@ export default function DecorationShelf({
                       }}
                     />
                     <span>{d.name}</span>
-                    <span className="shelf-popup-slot-badge">
-                      Slot {d.position_x}
-                    </span>
                   </div>
                 ))}
+
+                {/* Décos équipées dans d'autres slots (pour déplacer) */}
+                {decorations
+                  .filter((d) => d.position_x !== selectedSlot)
+                  .map((d) => (
+                    <div
+                      key={d.user_decoration_id}
+                      className="shelf-popup-item other-slot"
+                      onClick={() =>
+                        !loading &&
+                        handlePlace(d.user_decoration_id, selectedSlot)
+                      }
+                    >
+                      <img
+                        src={d.image_url}
+                        alt={d.name}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/images/placeholder.png";
+                        }}
+                      />
+                      <span>{d.name}</span>
+                      <span className="shelf-popup-slot-badge">
+                        Slot {d.position_x}
+                      </span>
+                    </div>
+                  ))}
+              </div>
             </div>
+            {/* fin shelf-popup-body */}
           </div>
         </div>
       )}

@@ -1,260 +1,573 @@
-.settings-wrap {
-  min-height: 100vh;
-  background: #fff;
-  font-family: "DM Sans", sans-serif;
-  display: flex;
-  flex-direction: column;
-}
+/* ============================================================
+   SETTINGS — Windows 98 / Control Panel Style
+   ============================================================ */
 
-.settings-content {
-  flex: 1;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 32px 24px;
-  width: 100%;
-}
-
-.settings-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 32px;
-}
-
-.settings-section {
-  margin-bottom: 36px;
-  padding-bottom: 36px;
-  border-bottom: 1px solid #eee;
-}
-
-.settings-section:last-child {
-  border-bottom: none;
-}
-
-.settings-section-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #aaa;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 16px;
-}
-
-.settings-section-title.danger {
-  color: #e53e3e;
-}
-
-.settings-notice {
-  border-radius: 4px;
-  padding: 10px 14px;
-  font-size: 13px;
-  margin-bottom: 16px;
-}
-
-.settings-notice.success {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-}
-
-.settings-notice.error {
-  background: #fff1f2;
-  border: 1px solid #fecdd3;
-  color: #9f1239;
-}
-
-.settings-input {
-  padding: 10px 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: "DM Sans", sans-serif;
-  color: #1a1a1a;
-  outline: none;
-  transition: border-color 0.15s;
-  width: 100%;
+.settings-wrap,
+.settings-wrap * {
+  /* Force la typographie rétro et standardisée de ta navbar */
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
   box-sizing: border-box;
 }
 
-.settings-input:focus {
-  border-color: #1a1a1a;
-}
-
-.settings-submit-btn {
-  padding: 10px 24px;
-  background: #1a1a1a;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: background 0.15s;
-}
-
-.settings-submit-btn:hover {
-  background: #333;
-}
-
-.settings-logout-btn {
-  padding: 10px 24px;
-  background: #f7f7f7;
-  color: #1a1a1a;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: background 0.15s;
-}
-
-.settings-logout-btn:hover {
-  background: #eee;
-}
-
-.settings-danger-text {
-  font-size: 13px;
-  color: #777;
-  margin: 0 0 16px;
-  line-height: 1.6;
-}
-
-.settings-delete-btn {
-  padding: 10px 24px;
-  background: #fff;
-  color: #e53e3e;
-  border: 1px solid #e53e3e;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: all 0.15s;
-}
-
-.settings-delete-btn:hover {
-  background: #e53e3e;
-  color: #fff;
-}
-
-.settings-delete-confirm {
+.settings-wrap {
+  min-height: 100vh;
+  background: #008080; /* Vert canard Windows 98 */
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
-.settings-delete-actions {
+/* ============================================================
+   DESKTOP CONTAINER
+   ============================================================ */
+
+.settings-desktop {
+  width: 100%;
+  max-width: 650px; /* Format boîte de dialogue centré */
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+/* ============================================================
+   MAIN WINDOW
+   ============================================================ */
+
+.settings-window {
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
+}
+
+/* ============================================================
+   TITLEBAR
+   ============================================================ */
+
+.settings-titlebar {
+  height: 34px;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  background: linear-gradient(to right, #000080, #1084d0);
 }
 
-.settings-cancel-btn {
-  padding: 10px 24px;
-  background: #f7f7f7;
-  color: #555;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
+.settings-titlebar-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.settings-titlebar-btns {
+  display: flex;
+  gap: 3px;
+}
+
+.settings-win-btn {
+  width: 22px;
+  height: 20px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  transition: background 0.15s;
+  padding: 0;
 }
 
-.settings-cancel-btn:hover {
-  background: #eee;
+.settings-win-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  padding: 1px 0 0 1px;
 }
 
-/* Infos compte */
+/* ============================================================
+   WINDOW BODY & SECTIONS
+   ============================================================ */
+
+.settings-window-body {
+  padding: 20px;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #c0c0c0;
+  /* Effet GroupBox classique de Windows 98 */
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+  position: relative;
+}
+
+.settings-section-title {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: #c0c0c0;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ============================================================
+   NOTICES
+   ============================================================ */
+
+.settings-notices {
+  margin-bottom: 20px;
+}
+
+.settings-notice {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  border-style: solid;
+  border-width: 2px;
+  margin: 0 0 8px 0;
+}
+
+.settings-notice.success {
+  background: #d8ffd8;
+  border-color: #ffffff #006000 #006000 #ffffff;
+  color: #006000;
+}
+
+.settings-notice.error {
+  background: #ffd8d8;
+  border-color: #ffffff #800000 #800000 #ffffff;
+  color: #800000;
+}
+
+/* ============================================================
+   INPUTS (Deep Inset)
+   ============================================================ */
+
+.settings-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  background: #ffffff;
+  color: #000000;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  box-shadow:
+    inset 1px 1px 0 #000000,
+    inset -1px -1px 0 #808080;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+.settings-input:focus {
+  background: #ffffff;
+}
+
+/* ============================================================
+   BUTTONS (Standard Retro Bevel)
+   ============================================================ */
+
+.settings-submit-btn,
+.settings-cancel-btn,
+.settings-edit-btn,
+.settings-action-btn,
+.settings-danger-btn {
+  background: #c0c0c0;
+  color: #000000;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.settings-submit-btn:active,
+.settings-cancel-btn:active,
+.settings-edit-btn:active,
+.settings-action-btn:active,
+.settings-danger-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  box-shadow: none;
+  padding: 7px 13px 5px 15px; /* Décale le texte au clic */
+}
+
+/* Variantes spécifiques */
+.settings-action-btn {
+  width: auto;
+  min-width: 180px;
+}
+
+.settings-danger-btn {
+  color: #a00000;
+  margin-bottom: 6px;
+}
+
+.settings-danger-btn.execution {
+  background: #ffd8d8;
+}
+
+/* ============================================================
+   ACCOUNT ROW LAYOUT
+   ============================================================ */
+
 .settings-info-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
+  background: #d4d4d4;
+  padding: 10px 12px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
 .settings-info-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .settings-info-label {
-  font-size: 12px;
-  color: #aaa;
-  font-weight: 500;
+  font-size: 11px;
+  color: #555555;
+  font-weight: 700;
 }
 
 .settings-info-value {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
 }
 
-.settings-edit-btn {
-  padding: 6px 14px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  cursor: pointer;
-  font-family: "DM Sans", sans-serif;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-
-.settings-edit-btn:hover {
-  background: #efefef;
-  color: #1a1a1a;
-}
-
+/* Formulaires d'édition déployés */
 .settings-edit-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 16px;
-  background: #f7f7f7;
-  border: 1px solid #eee;
-  border-radius: 4px;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 12px;
+  background: #d4d4d4;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
-.settings-form-actions {
+.settings-form-actions,
+.settings-delete-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
-/* Crédits */
+/* DANGER CONTEXTS */
+.settings-danger-text {
+  font-size: 12px;
+  color: #404040;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.settings-warn-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #a00000;
+  margin: 0 0 6px 0;
+}
+
+.settings-delete-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #d4d4d4;
+  padding: 12px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+  margin-top: 8px;
+}
+
+/* ============================================================
+   CREDITS PANEL (Simulated ListView)
+   ============================================================ */
+
 .settings-credits {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
+  background: #ffffff; /* Fond blanc comme un explorateur de fichiers */
+  border-style: solid;
+  border-width: 2px;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  box-shadow:
+    inset 1px 1px 0 #000000,
+    inset -1px -1px 0 #808080;
+  padding: 4px;
 }
 
 .settings-credit-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  border: 1px solid #eee;
-  border-radius: 4px;
-  background: #f7f7f7;
+  padding: 6px 12px;
+  background: #ffffff;
+}
+
+.settings-credit-row:nth-child(even) {
+  background: #f5f5f5; /* Alternance de lignes */
 }
 
 .settings-credit-role {
   font-size: 12px;
-  color: #aaa;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: #666666;
+  font-weight: 700;
 }
 
 .settings-credit-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+
+/* ============================================================
+   AJOUTS EXTENSION — MODE WINDOWS 98 SETUP WIZARD (REGISTER)
+   ============================================================ */
+
+.setup-screen-wrap {
+  min-height: 100vh;
+  background: #008080; /* Fond vert-bleu canard Windows 98 */
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Bandeau horizontal supérieur noir/bleu dégradé */
+.setup-top-banner {
+  background: linear-gradient(to right, #000000, #000080);
+  height: 45px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 2px solid #ffffff;
+  gap: 12px;
+}
+
+.setup-banner-logo {
+  font-size: 20px;
+}
+
+.setup-banner-text {
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* Organisation globale de l'installateur */
+.setup-main-layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 40px auto;
+  gap: 0;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Barre latérale gauche (Étapes) */
+.setup-sidebar {
+  width: 240px;
+  background: #000000;
+  color: #a0a0a0;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 2px solid #dfdfdf;
+}
+
+.setup-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.setup-step-item {
+  font-size: 12px;
+  margin-bottom: 14px;
+  position: relative;
+  padding-left: 18px;
+}
+
+.setup-step-item::before {
+  content: "○";
+  position: absolute;
+  left: 0;
+}
+
+.setup-step-item.done {
+  color: #808080;
+  text-decoration: line-through;
+}
+
+.setup-step-item.done::before {
+  content: "✓";
+}
+
+.setup-step-item.active {
+  color: #ffff00; /* Texte jaune gras emblématique */
+  font-weight: 700;
+}
+
+.setup-step-item.active::before {
+  content: "▶";
+  color: #ffff00;
+}
+
+/* Pied de la barre latérale */
+.setup-sidebar-footer {
+  border-top: 1px solid #404040;
+  padding-top: 16px;
+}
+
+.setup-countdown {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.countdown-label {
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.countdown-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffff00;
+}
+
+.setup-vendor-logo {
+  font-family: "Times New Roman", serif;
+  font-style: italic;
+  font-size: 24px;
+  color: #404040;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* Fenêtre centrale de l'assistant */
+.setup-wizard-window {
+  flex: 1;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.setup-wizard-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.setup-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 6px 0;
+}
+
+.setup-section-desc {
+  font-size: 12px;
+  color: #000000;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+/* Division du contenu interne */
+.setup-wizard-content-split {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+}
+
+/* Colonne Gauche (Infos/Avertissements) */
+.setup-info-panel {
+  width: 200px;
+  border-right: 1px solid #808080;
+  padding-right: 16px;
+}
+
+.setup-info-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.info-box-icon {
+  font-size: 24px;
+}
+
+/* Colonne Droite (Formulaire) */
+.setup-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Bas de page et boutons d'action */
+.setup-wizard-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.setup-wizard-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.setup-wizard-actions .auth-btn {
+  width: 90px;
+}
+
+/* Adaptations responsives basiques pour l'éditeur */
+@media (max-width: 768px) {
+  .setup-main-layout {
+    flex-direction: column;
+    margin: 10px;
+  }
+  .setup-sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .setup-wizard-content-split {
+    flex-direction: column;
+  }
+  .setup-info-panel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #808080;
+    padding-bottom: 12px;
+  }
 }

@@ -217,266 +217,297 @@ export default function Settings() {
   return (
     <div className="settings-wrap">
       <Navbar />
-      <div className="settings-content">
-        <h1 className="settings-title">Paramètres</h1>
 
-        {message && <p className="settings-notice success">{message}</p>}
-        {error && <p className="settings-notice error">{error}</p>}
-
-        {/* Infos du compte */}
-        <div className="settings-section">
-          <h2 className="settings-section-title">Mon compte</h2>
-
-          {/* Pseudo */}
-          <div className="settings-info-row">
-            <div className="settings-info-content">
-              <span className="settings-info-label">Nom d'utilisateur</span>
-              <span className="settings-info-value">{userInfo.pseudo}</span>
+      <div className="settings-desktop">
+        {/* Fenêtre principale Système / Paramètres */}
+        <section className="settings-window">
+          <div className="settings-titlebar">
+            <span className="settings-titlebar-label">
+              Propriétés du système
+            </span>
+            <div className="settings-titlebar-btns">
+              <button className="settings-win-btn">─</button>
+              <button className="settings-win-btn">□</button>
+              <button
+                className="settings-win-btn"
+                onClick={() => navigate("/game")}
+              >
+                ✕
+              </button>
             </div>
-            <button
-              className="settings-edit-btn"
-              onClick={() => {
-                reset();
-                setEditMode("pseudo");
-              }}
-            >
-              Modifier
-            </button>
           </div>
-          {editMode === "pseudo" && (
-            <div className="settings-edit-form">
-              <input
-                className="settings-input"
-                type="text"
-                placeholder="Nouveau nom d'utilisateur"
-                value={newValue}
-                onChange={(e) => setNewValue(e.target.value)}
-              />
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Mot de passe actuel"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="settings-form-actions">
+
+          <div className="settings-window-body">
+            {(message || error) && (
+              <div className="settings-notices">
+                {message && (
+                  <p className="settings-notice success">{message}</p>
+                )}
+                {error && <p className="settings-notice error">{error}</p>}
+              </div>
+            )}
+
+            {/* Infos du compte */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Mon compte</h2>
+
+              {/* Pseudo */}
+              <div className="settings-info-row">
+                <div className="settings-info-content">
+                  <span className="settings-info-label">Nom d'utilisateur</span>
+                  <span className="settings-info-value">{userInfo.pseudo}</span>
+                </div>
                 <button
-                  className="settings-submit-btn"
-                  onClick={handleChangePseudo}
+                  className="settings-edit-btn"
+                  onClick={() => {
+                    reset();
+                    setEditMode("pseudo");
+                  }}
                 >
-                  Confirmer
-                </button>
-                <button className="settings-cancel-btn" onClick={reset}>
-                  Annuler
+                  Modifier
                 </button>
               </div>
-            </div>
-          )}
+              {editMode === "pseudo" && (
+                <div className="settings-edit-form">
+                  <input
+                    className="settings-input"
+                    type="text"
+                    placeholder="Nouveau nom d'utilisateur"
+                    value={newValue}
+                    onChange={(e) => setNewValue(e.target.value)}
+                  />
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Mot de passe actuel"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="settings-form-actions">
+                    <button
+                      className="settings-submit-btn"
+                      onClick={handleChangePseudo}
+                    >
+                      Confirmer
+                    </button>
+                    <button className="settings-cancel-btn" onClick={reset}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
 
-          {/* Email */}
-          <div className="settings-info-row" style={{ marginTop: 16 }}>
-            <div className="settings-info-content">
-              <span className="settings-info-label">Email</span>
-              <span className="settings-info-value">{userInfo.email}</span>
-            </div>
-            <button
-              className="settings-edit-btn"
-              onClick={() => {
-                reset();
-                setEditMode("email");
-              }}
-            >
-              Modifier
-            </button>
-          </div>
-          {editMode === "email" && (
-            <div className="settings-edit-form">
-              <input
-                className="settings-input"
-                type="email"
-                placeholder="Nouvel email"
-                value={newValue}
-                onChange={(e) => setNewValue(e.target.value)}
-              />
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Mot de passe actuel"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="settings-form-actions">
+              {/* Email */}
+              <div className="settings-info-row" style={{ marginTop: 16 }}>
+                <div className="settings-info-content">
+                  <span className="settings-info-label">Email</span>
+                  <span className="settings-info-value">{userInfo.email}</span>
+                </div>
                 <button
-                  className="settings-submit-btn"
-                  onClick={handleChangeEmail}
+                  className="settings-edit-btn"
+                  onClick={() => {
+                    reset();
+                    setEditMode("email");
+                  }}
                 >
-                  Confirmer
-                </button>
-                <button className="settings-cancel-btn" onClick={reset}>
-                  Annuler
+                  Modifier
                 </button>
               </div>
+              {editMode === "email" && (
+                <div className="settings-edit-form">
+                  <input
+                    className="settings-input"
+                    type="email"
+                    placeholder="Nouvel email"
+                    value={newValue}
+                    onChange={(e) => setNewValue(e.target.value)}
+                  />
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Mot de passe actuel"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="settings-form-actions">
+                    <button
+                      className="settings-submit-btn"
+                      onClick={handleChangeEmail}
+                    >
+                      Confirmer
+                    </button>
+                    <button className="settings-cancel-btn" onClick={reset}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* Changer mot de passe */}
-        <div className="settings-section">
-          <h2 className="settings-section-title">Mot de passe</h2>
-          {editMode !== "password" ? (
-            <button
-              className="settings-logout-btn"
-              onClick={() => {
-                reset();
-                setEditMode("password");
-              }}
-            >
-              Changer le mot de passe
-            </button>
-          ) : (
-            <div className="settings-edit-form">
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Mot de passe actuel"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Nouveau mot de passe"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Confirmer le nouveau mot de passe"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <div className="settings-form-actions">
+            {/* Changer mot de passe */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Sécurité</h2>
+              {editMode !== "password" ? (
                 <button
-                  className="settings-submit-btn"
-                  onClick={handleChangePassword}
+                  className="settings-action-btn"
+                  onClick={() => {
+                    reset();
+                    setEditMode("password");
+                  }}
                 >
-                  Confirmer
+                  Changer le mot de passe...
                 </button>
-                <button className="settings-cancel-btn" onClick={reset}>
-                  Annuler
-                </button>
-              </div>
+              ) : (
+                <div className="settings-edit-form">
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Mot de passe actuel"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Nouveau mot de passe"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Confirmer le nouveau mot de passe"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <div className="settings-form-actions">
+                    <button
+                      className="settings-submit-btn"
+                      onClick={handleChangePassword}
+                    >
+                      Confirmer
+                    </button>
+                    <button className="settings-cancel-btn" onClick={reset}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* Déconnexion */}
-        <div className="settings-section">
-          <h2 className="settings-section-title">Session</h2>
-          <button className="settings-logout-btn" onClick={handleLogout}>
-            Se déconnecter
-          </button>
-        </div>
+            {/* Session */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Session</h2>
+              <button className="settings-action-btn" onClick={handleLogout}>
+                Se déconnecter
+              </button>
+            </div>
 
-        {/* Réinitialiser */}
-        <div className="settings-section">
-          <h2 className="settings-section-title">Réinitialiser le jeu</h2>
-          <p className="settings-danger-text">
-            Supprime tous vos monstres et décorations et remet vos coins à 0.
-          </p>
-          {confirmMode !== "reset" ? (
-            <button
-              className="settings-delete-btn"
-              onClick={() => {
-                reset();
-                setConfirmMode("reset");
-              }}
-            >
-              Réinitialiser
-            </button>
-          ) : (
-            <div className="settings-delete-confirm">
-              <p style={{ fontSize: 13, color: "#555", margin: 0 }}>
-                Cette action est irréversible.
+            {/* Réinitialiser */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Zone de danger</h2>
+              <p className="settings-danger-text">
+                Réinitialiser : Supprime vos monstres/décorations et remet vos
+                coins à 0.
               </p>
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Confirmer avec votre mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="settings-delete-actions">
-                <button className="settings-delete-btn" onClick={handleReset}>
-                  Confirmer
+              {confirmMode !== "reset" ? (
+                <button
+                  className="settings-danger-btn"
+                  onClick={() => {
+                    reset();
+                    setConfirmMode("reset");
+                  }}
+                >
+                  Réinitialiser le jeu...
                 </button>
-                <button className="settings-cancel-btn" onClick={reset}>
-                  Annuler
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+              ) : (
+                <div className="settings-delete-confirm">
+                  <p className="settings-warn-label">
+                    Cette action est irréversible.
+                  </p>
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Entrez votre mot de passe"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="settings-delete-actions">
+                    <button
+                      className="settings-danger-btn execution"
+                      onClick={handleReset}
+                    >
+                      Confirmer la remise à zéro
+                    </button>
+                    <button className="settings-cancel-btn" onClick={reset}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
 
-        {/* Supprimer le compte */}
-        <div className="settings-section danger">
-          <h2 className="settings-section-title danger">Supprimer le compte</h2>
-          <p className="settings-danger-text">
-            Cette action est irréversible. Toutes vos données seront supprimées.
-          </p>
-          {confirmMode !== "delete" ? (
-            <button
-              className="settings-delete-btn"
-              onClick={() => {
-                reset();
-                setConfirmMode("delete");
-              }}
-            >
-              Supprimer mon compte
-            </button>
-          ) : (
-            <div className="settings-delete-confirm">
-              <p style={{ fontSize: 13, color: "#555", margin: 0 }}>
-                Êtes-vous sûr ? Cette action est définitive.
+              {/* Supprimer le compte */}
+              <p className="settings-danger-text" style={{ marginTop: 20 }}>
+                Supprimer : Désactive et détruit définitivement votre compte
+                joueur.
               </p>
-              <input
-                className="settings-input"
-                type="password"
-                placeholder="Confirmer avec votre mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <div className="settings-delete-actions">
-                <button className="settings-delete-btn" onClick={handleDelete}>
-                  Confirmer la suppression
+              {confirmMode !== "delete" ? (
+                <button
+                  className="settings-danger-btn"
+                  onClick={() => {
+                    reset();
+                    setConfirmMode("delete");
+                  }}
+                >
+                  Supprimer le compte...
                 </button>
-                <button className="settings-cancel-btn" onClick={reset}>
-                  Annuler
-                </button>
-              </div>
+              ) : (
+                <div className="settings-delete-confirm">
+                  <p className="settings-warn-label">
+                    Êtes-vous sûr ? Tout sera perdu.
+                  </p>
+                  <input
+                    className="settings-input"
+                    type="password"
+                    placeholder="Entrez votre mot de passe"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="settings-delete-actions">
+                    <button
+                      className="settings-danger-btn execution"
+                      onClick={handleDelete}
+                    >
+                      Supprimer définitivement
+                    </button>
+                    <button className="settings-cancel-btn" onClick={reset}>
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* Crédits */}
-        <div className="settings-section">
-          <h2 className="settings-section-title">Crédits</h2>
-          <div className="settings-credits">
-            <div className="settings-credit-row">
-              <span className="settings-credit-role">Développeur</span>
-              <span className="settings-credit-name">CAZALIS Matthieu</span>
-            </div>
-            <div className="settings-credit-row">
-              <span className="settings-credit-role">Développeur</span>
-              <span className="settings-credit-name">BOURMAUD Simon</span>
-            </div>
-            <div className="settings-credit-row">
-              <span className="settings-credit-role">Artiste</span>
-              <span className="settings-credit-name">mad.davvg101</span>
+            {/* Crédits */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Crédits système</h2>
+              <div className="settings-credits">
+                <div className="settings-credit-row">
+                  <span className="settings-credit-role">Développeur</span>
+                  <span className="settings-credit-name">CAZALIS Matthieu</span>
+                </div>
+                <div className="settings-credit-row">
+                  <span className="settings-credit-role">Développeur</span>
+                  <span className="settings-credit-name">BOURMAUD Simon</span>
+                </div>
+                <div className="settings-credit-row">
+                  <span className="settings-credit-role">Artiste</span>
+                  <span className="settings-credit-name">mad.davvg101</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

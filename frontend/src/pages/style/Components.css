@@ -1,114 +1,264 @@
-/* MONSTER  */
+/* ============================================================
+   MONSTER CARD — Retro Windows 98 / SpaceHey Style
+   ============================================================ */
 
 .monster-display {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(12px, 1.5vh, 20px);
-  width: clamp(360px, 42vw, 640px);
-  padding: clamp(20px, 2.5vh, 40px);
+  width: clamp(320px, 36vw, 560px);
+
+  background: #c0c0c0;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
 }
 
-.monster-image-wrap {
-  width: clamp(240px, 28vw, 440px);
-  height: clamp(240px, 28vw, 440px);
+.monster-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 32px;
+  padding: 0 6px;
+
+  background: linear-gradient(to right, #000080, #1084d0);
+
+  flex-shrink: 0;
+}
+
+.monster-titlebar-label {
+  font-family: "Libre Franklin", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.monster-titlebar-btns {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.monster-win-btn {
+  width: 20px;
+  height: 18px;
+
+  background: #c0c0c0;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  line-height: 1;
+  cursor: default;
+
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #ffffff;
+}
+
+.monster-win-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+
+  box-shadow:
+    inset 1px 1px 0 #808080,
+    inset -1px -1px 0 #ffffff;
+}
+
+.monster-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 18px;
+  padding: 22px;
+}
+
+.monster-image-wrap {
+  width: clamp(220px, 24vw, 380px);
+  height: clamp(220px, 24vw, 380px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #d4d4d4;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+
   cursor: pointer;
-  transition: transform 0.15s;
+
+  transition: filter 0.12s ease;
 }
 
 .monster-image-wrap:hover {
-  transform: scale(1.04);
+  filter: brightness(1.03);
 }
+
 .monster-image-wrap.disabled {
+  opacity: 0.55;
   cursor: not-allowed;
-  opacity: 0.6;
 }
 
 .monster-image-wrap img {
-  width: 100%;
-  height: 100%;
+  width: 82%;
+  height: 82%;
   object-fit: contain;
 }
 
 .monster-divider {
-  width: 60%;
+  width: 100%;
   border: none;
-  border-top: 2px dashed #ccc;
+
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+
   margin: 0;
 }
 
 .monster-name {
-  font-size: clamp(22px, 2.2vw, 34px);
-  font-weight: 700;
-  color: #1a1a1a;
   margin: 0;
+
+  font-family: "Libre Franklin", Arial, sans-serif;
+  font-size: clamp(22px, 2vw, 36px);
+  font-weight: 700;
+  color: #000000;
+
   text-align: center;
 }
 
 .timer-bar-wrap {
-  width: 100%;
-  background: #e5e7eb;
-  border-radius: 50px;
-  height: clamp(24px, 2.8vh, 34px);
-  overflow: hidden;
   position: relative;
+
+  width: 100%;
+  height: 36px;
+
+  overflow: hidden;
+
+  background: #efefef;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
 }
 
 .timer-bar-fill {
   height: 100%;
-  border-radius: 50px;
-  background: #1a1a1a;
+
+  background: #0000a8;
+
   transition: width 1s linear;
 }
 
 .timer-bar-label {
   position: absolute;
   inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(12px, 1.1vw, 15px);
-  font-weight: 600;
-  color: #fff;
-  mix-blend-mode: difference;
+
+  font-family: "Libre Franklin", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #ffff66;
+
+  text-shadow: 1px 1px 0 #000000;
 }
 
 .monster-stats-row {
   display: flex;
-  gap: clamp(16px, 2.5vw, 40px);
   justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 12px;
   width: 100%;
 }
 
 .monster-stat {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: clamp(14px, 1.4vw, 20px);
-  font-weight: 600;
-  color: #333;
-}
-
-.monster-stat-icon {
-  width: clamp(30px, 3vw, 44px);
-  height: clamp(30px, 3vw, 44px);
-  background: #1a1a1a;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  color: #fff;
-  font-size: clamp(14px, 1.4vw, 20px);
+
+  min-width: 140px;
+
+  padding: 8px 18px;
+
+  background: #c0c0c0;
+
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #808080 #808080 #ffffff;
+
+  font-family: "Libre Franklin", Arial, sans-serif;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 700;
+
+  color: #000000;
+
+  box-shadow:
+    inset -1px -1px 0 #404040,
+    inset 1px 1px 0 #dfdfdf;
 }
 
-/* DECORATION SHELF */
+@media (max-width: 768px) {
+  .monster-display {
+    width: 100%;
+  }
+
+  .monster-body {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .monster-image-wrap {
+    width: 100%;
+    max-width: 320px;
+    height: 320px;
+  }
+
+  .monster-name {
+    font-size: 28px;
+  }
+
+  .timer-bar-wrap {
+    height: 32px;
+  }
+
+  .monster-stat {
+    min-width: 120px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   DECORATION SHELF
+   ============================================================ */
 
 .shelf-wrap {
   position: relative;
-  width: clamp(360px, 44vw, 680px);
+  width: clamp(320px, 44vw, 680px);
 }
 
 .shelf-image {
@@ -125,7 +275,7 @@
   align-items: flex-end;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.15s;
+  transition: transform 0.1s;
 }
 
 .shelf-slot:hover {
@@ -133,28 +283,30 @@
 }
 
 .shelf-slot img {
-  width: 200%;
+  width: 100%;
   height: clamp(50px, 4.4vw, 72px);
   object-fit: contain;
 }
 
 .shelf-slot-empty {
-  width: clamp(50px, 3.8vw, 62px);
-  height: clamp(50px, 3.8vw, 62px);
-  border: 2px dashed rgb(110, 151, 205);
-  border-radius: 4px;
+  width: clamp(38px, 3.8vw, 58px);
+  height: clamp(38px, 3.8vw, 58px);
+  border: 2px dashed rgba(100, 140, 200, 0.55);
   transition: border-color 0.15s;
 }
 
 .shelf-slot:hover .shelf-slot-empty {
-  border-color: rgb(110, 151, 205);
+  border-color: rgba(100, 140, 200, 0.9);
 }
 
-/* Shelf popup */
+/* ============================================================
+   SHELF POPUP — Fenêtre Windows 98
+   ============================================================ */
+
 .shelf-popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,202 +315,266 @@
 }
 
 .shelf-popup {
-  background: #fff;
-  border: 1.5px solid #ddd;
-  border-radius: 4px;
-  padding: 28px;
+  background: var(--win-silver, #c0c0c0);
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  font-family: "DM Sans", sans-serif;
+  gap: 0;
+  font-family: var(--win-font, "Arial", sans-serif);
+  box-shadow:
+    inset -2px -2px 0 var(--win-dark, #808080),
+    inset 2px 2px 0 var(--win-light, #ffffff),
+    -1px -1px 0 var(--win-darker, #404040),
+    1px 1px 0 var(--win-light, #ffffff);
+}
+
+.shelf-popup-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  height: 22px;
+  background: linear-gradient(
+    to right,
+    var(--win-accent, #000080),
+    var(--win-accent2, #1084d0)
+  );
+  flex-shrink: 0;
+}
+
+.shelf-popup-titlebar-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--win-title-text, #ffffff);
 }
 
 .shelf-popup-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+  width: 18px;
+  height: 16px;
+  background: var(--win-silver, #c0c0c0);
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
   cursor: pointer;
-  font-size: 13px;
-  color: #555;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow:
+    inset -1px -1px 0 var(--win-dark, #808080),
+    inset 1px 1px 0 var(--win-light, #ffffff);
+  font-family: var(--win-font, "Arial", sans-serif);
 }
 
-.shelf-popup-close:hover {
-  background: #efefef;
-  color: #1a1a1a;
+.shelf-popup-close:active {
+  box-shadow:
+    inset 1px 1px 0 var(--win-dark, #808080),
+    inset -1px -1px 0 var(--win-light, #ffffff);
+}
+
+.shelf-popup-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
 }
 
 .shelf-popup-title {
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--win-text, #000000);
   margin: 0;
 }
 
 .shelf-popup-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #777;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 .shelf-popup-current {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #eee;
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--win-dark, #808080);
 }
 
 .shelf-popup-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .shelf-popup-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  gap: 10px;
+  padding: 6px 10px;
   cursor: pointer;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
+  background: var(--win-light, #ffffff);
+  box-shadow:
+    inset 1px 1px 0 var(--win-dark, #808080),
+    inset -1px -1px 0 var(--win-light, #ffffff);
+  transition: background 0.1s;
 }
 
 .shelf-popup-item:hover {
-  border-color: #aaa;
-  background: #f7f7f7;
+  background: var(--win-accent, #000080);
+}
+
+.shelf-popup-item:hover span {
+  color: var(--win-title-text, #ffffff);
 }
 
 .shelf-popup-item.active {
-  border-color: #1a1a1a;
-  background: #f7f7f7;
+  background: var(--win-accent, #000080);
+  outline: 1px dotted var(--win-title-text, #ffffff);
+  outline-offset: -3px;
+}
+
+.shelf-popup-item.active span {
+  color: var(--win-title-text, #ffffff);
 }
 
 .shelf-popup-item.other-slot {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .shelf-popup-item img {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  background: #f0f0f0;
-  border-radius: 3px;
   flex-shrink: 0;
 }
 
 .shelf-popup-item span {
   flex: 1;
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a1a1a;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
+  font-family: var(--win-font, "Arial", sans-serif);
 }
 
 .shelf-popup-slot-badge {
-  font-size: 11px;
-  font-weight: 600;
-  color: #777;
-  background: #f0f0f0;
-  border-radius: 3px;
-  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
+  background: var(--win-silver, #c0c0c0);
+  padding: 1px 6px;
+  box-shadow:
+    inset -1px -1px 0 var(--win-dark, #808080),
+    inset 1px 1px 0 var(--win-light, #ffffff);
   flex-shrink: 0;
 }
 
 .shelf-popup-remove {
-  padding: 4px 10px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #a32d2d;
+  padding: 3px 10px;
+  background: var(--win-silver, #c0c0c0);
+  border: none;
+  font-family: var(--win-font, "Arial", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
   cursor: pointer;
-  font-family: "DM Sans", sans-serif;
   flex-shrink: 0;
-  transition: background 0.15s;
+  box-shadow:
+    inset -1px -1px 0 var(--win-dark, #808080),
+    inset 1px 1px 0 var(--win-light, #ffffff),
+    -1px -1px 0 var(--win-darker, #404040),
+    1px 1px 0 var(--win-light, #ffffff);
 }
 
-.shelf-popup-remove:hover {
-  background: #fff1f2;
-  border-color: #fecdd3;
+.shelf-popup-remove:active {
+  box-shadow:
+    inset 1px 1px 0 var(--win-dark, #808080),
+    inset -1px -1px 0 var(--win-light, #ffffff);
+  padding: 4px 9px 2px 11px;
 }
 
-@media (max-width: 800px) {
-  .monster-display {
-    width: 90vw;
-    max-width: 500px;
-  }
-  .shelf-wrap {
-    width: 90vw !important;
-    max-width: 500px;
-  }
-}
-
-/* STATS BAR */
+/* ============================================================
+   STATS BAR
+   ============================================================ */
 
 .stats-bar-wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
+
 .stats-bar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .stats-bar-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-family: var(--win-font, "Arial", sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--win-text, #000000);
 }
+
 .stats-bar-level {
-  font-size: 13px;
-  color: #777;
+  font-family: var(--win-font, "Arial", sans-serif);
+  font-size: 11px;
+  color: var(--win-dark, #808080);
   font-weight: 500;
 }
+
 .stats-bar-track {
   width: 100%;
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 50px;
+  height: 14px;
+  background: var(--win-light, #ffffff);
+  box-shadow:
+    inset 1px 1px 0 var(--win-dark, #808080),
+    inset -1px -1px 0 var(--win-light, #ffffff);
   overflow: hidden;
 }
+
 .stats-bar-fill {
   height: 100%;
-  border-radius: 50px;
-  background: #1a1a1a;
+  background: var(--win-accent, #000080);
   transition: width 0.4s ease;
 }
+
 .stats-bar-footer {
   display: flex;
   justify-content: space-between;
 }
+
 .stats-bar-stade {
-  font-size: 12px;
-  color: #555;
+  font-family: var(--win-font, "Arial", sans-serif);
+  font-size: 11px;
+  color: var(--win-text, #000000);
   font-weight: 500;
 }
+
 .stats-bar-percent {
-  font-size: 12px;
-  color: #aaa;
+  font-family: var(--win-font, "Arial", sans-serif);
+  font-size: 11px;
+  color: var(--win-dark, #808080);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 800px) {
+  .monster-display {
+    width: 90vw;
+    max-width: 460px;
+  }
+  .shelf-wrap {
+    width: 90vw !important;
+    max-width: 460px;
+  }
 }

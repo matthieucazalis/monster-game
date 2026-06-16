@@ -1,196 +1,246 @@
-* {
+/* ============================================================
+   AUTH — Windows 98 Logon Screen Style
+   ============================================================ */
+
+.auth-wrap,
+.auth-wrap * {
   box-sizing: border-box;
+  font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
 }
 
 .auth-wrap {
-  font-family: "DM Sans", sans-serif;
-  background: #fff;
   min-height: 100vh;
+  background: #008080; /* Vert canard officiel bureau Windows 98 */
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* ============================================================
+   LOGON DIALOG WINDOW
+   ============================================================ */
+
+.auth-window {
+  width: 100%;
+  max-width: 520px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
+}
+
+/* Barre de titre */
+.auth-titlebar {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  background: linear-gradient(to right, #000080, #1084d0); /* Dégradé bleu */
+}
+
+.auth-titlebar-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  padding-left: 2px;
+}
+
+.auth-titlebar-btns {
+  display: flex;
+  gap: 2px;
+}
+
+.auth-win-btn {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-win-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+  padding: 1px 0 0 1px;
+}
+
+/* Corps de la boîte de dialogue */
+.auth-window-body {
+  padding: 16px;
+}
+
+/* ============================================================
+   HEADER ZONE (Logo + Description)
+   ============================================================ */
+
+.auth-header-zone {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.auth-retro-icon {
+  font-size: 36px;
+  user-select: none;
+  padding-top: 4px;
+}
+
+.auth-welcome-text {
+  flex: 1;
 }
 
 .auth-title {
-  font-family: sans-serif;
-  font-size: 75px;
-  letter-spacing: 4px;
-  color: #1a1a1a;
-  margin: 0;
-  line-height: 1;
+  font-size: 22px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.5px;
 }
 
 .auth-subtitle {
-  font-size: 16px;
-  color: #777;
-  margin: 4px 0 2rem;
+  font-size: 12px;
+  color: #000000;
+  line-height: 1.4;
+  margin: 0;
 }
 
-/* Card */
-.auth-card {
-  border: 1.5px solid #ddd;
-  background: #f7f7f7;
-  width: 100%;
-  max-width: 680px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.auth-separator {
+  border: none;
+  height: 2px;
+  background: #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 12px 0 16px 0;
 }
 
-.auth-card-single {
-  border: 1.5px solid #ddd;
-  background: #f7f7f7;
-  width: 100%;
-  max-width: 380px;
-  padding: 1.5rem;
+/* ============================================================
+   MAIN INTERFACE LAYOUT
+   ============================================================ */
+
+.auth-main-layout {
   display: flex;
-  flex-direction: column;
+  gap: 20px;
 }
 
-.auth-left {
-  padding: 1.5rem;
-  border-right: 1.5px solid #ddd;
+.auth-form-fields {
+  flex: 1;
 }
 
-.auth-right {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Champs */
+/* Champs de saisie */
 .auth-field {
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
 .auth-label {
   display: block;
-  font-size: 14px;
-  color: #333;
+  font-size: 12px;
+  color: #000000;
   margin-bottom: 4px;
-  font-weight: 500;
 }
 
 .auth-input {
   width: 100%;
-  padding: 7px 10px;
-  font-family: "DM Sans", sans-serif;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  background: #fff;
+  padding: 4px 6px;
+  font-size: 13px;
+  background: #ffffff;
+  color: #000000;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  box-shadow:
+    inset 1px 1px 0 #000000,
+    inset -1px -1px 0 #808080;
   outline: none;
-  border-radius: 3px;
 }
 
 .auth-input:focus {
-  border-color: #888;
+  /* Bordure de focus en pointillés fine rétro */
+  outline: 1px dotted #000000;
+  outline-offset: -3px;
 }
 
-/* Checkbox */
-.auth-check-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-top: 0.5rem;
-}
-
-.auth-check-row input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-
-.auth-check-label {
-  font-size: 13px;
-  color: #555;
-}
-
-/* Texte de navigation */
+/* Navigation et Liens */
 .auth-nav-text {
-  margin-top: 1rem;
-  font-size: 13px;
-  color: #555;
+  margin-top: 14px;
+  font-size: 11px;
+  color: #404040;
 }
 
 .auth-link {
-  color: #0077aa;
+  color: #0000ff;
   text-decoration: underline;
 }
 
-/* Bouton */
-.auth-btn {
-  margin-top: 1.5rem;
-  background: #f0f0f0;
-  border: 1.5px solid #bbb;
-  padding: 10px 16px;
-  font-family: "DM Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  width: 100%;
-  border-radius: 3px;
-  color: #1a1a1a;
-  transition: background 0.15s;
+.auth-link:hover {
+  color: #000080;
 }
 
-.auth-btn:hover {
-  background: #1a1a1a;
-  color: #fff;
-  border-color: #1a1a1a;
+/* Messages d'erreur */
+.auth-error {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a00000;
+  margin: 6px 0 0 0;
+}
+
+/* ============================================================
+   RIGHT COLUMN ACTION BUTTONS
+   ============================================================ */
+
+.auth-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 95px;
+  padding-top: 18px; /* Aligné par rapport à la hauteur du premier input */
+}
+
+.auth-btn {
+  width: 100%;
+  background: #c0c0c0;
+  color: #000000;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset 1px 1px 0 #dfdfdf;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 5px 0;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Le bouton par défaut (OK) possède une fine bordure noire d'activation */
+.auth-btn.default {
+  font-weight: 700;
+  border-color: #ffffff #000000 #000000 #ffffff;
+  outline: 1px solid #000000;
+  outline-offset: -2px;
+}
+
+.auth-btn:active:not(:disabled) {
+  border-color: #404040 #ffffff #ffffff #404040;
+  box-shadow: none;
+  padding: 6px 0 4px 1px; /* Simulation d'enfoncement mécanique */
 }
 
 .auth-btn:disabled {
-  opacity: 0.6;
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
   cursor: not-allowed;
-}
-
-/* Messages */
-.auth-error {
-  font-size: 13px;
-  color: #a32d2d;
-  margin-top: 8px;
-}
-
-.auth-success {
-  font-size: 13px;
-  color: #3b6d11;
-  margin-top: 8px;
-}
-
-/* Spoiler (register) */
-.auth-spoiler-title {
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: underline;
-  color: #1a1a1a;
-  margin: 0 0 0.5rem;
-}
-
-.auth-spoiler-label {
-  font-size: 13px;
-  color: #555;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
-}
-
-.auth-feature-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 auto;
-}
-
-.auth-feature-item {
-  font-size: 14px;
-  color: #444;
-  margin-bottom: 0.75rem;
-  padding-left: 1rem;
-  position: relative;
-}
-
-.auth-feature-item::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: #aaa;
 }

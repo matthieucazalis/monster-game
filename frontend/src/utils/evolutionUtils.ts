@@ -7,8 +7,6 @@ export function getEvolutionStage(level: number, maxLevel: number): 1 | 2 | 3 {
   return 3;
 }
 
-/* pour l'URL */
-
 export function getMonsterImageUrl(
   baseImageUrl: string,
   level: number,
