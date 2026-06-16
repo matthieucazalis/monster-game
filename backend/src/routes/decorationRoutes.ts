@@ -3,8 +3,8 @@ import {
   getAllDecorations,
   getMyDecorations,
   buyDecoration,
-  toggleEquipDecoration,
-  updateDecorationPosition,
+  placeDecoration,
+  removeDecoration,
 } from "../controllers/decorationController";
 import authenticate from "../middlewares/auth";
 
@@ -13,7 +13,7 @@ const router = Router();
 router.get("/", authenticate, getAllDecorations);
 router.get("/my", authenticate, getMyDecorations);
 router.post("/buy/:decorationId", authenticate, buyDecoration);
-router.put("/equip/:userDecorationId", authenticate, toggleEquipDecoration);
-router.put("/position/:userDecorationId", authenticate, updateDecorationPosition);
+router.put("/place/:userDecorationId", authenticate, placeDecoration);
+router.put("/remove/:userDecorationId", authenticate, removeDecoration);
 
 export default router;

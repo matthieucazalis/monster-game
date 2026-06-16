@@ -18,7 +18,6 @@ interface MonsterCardProps {
 }
 
 function getTimeRemaining(nextAvailableAt: string | null): number {
-  // NULL = jamais cliqué → toujours prêt
   if (!nextAvailableAt) return 0;
   const next = new Date(nextAvailableAt).getTime();
   return Math.max(0, next - Date.now());

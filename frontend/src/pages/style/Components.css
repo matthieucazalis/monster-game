@@ -104,7 +104,7 @@
   font-size: clamp(14px, 1.4vw, 20px);
 }
 
-/* DECORATION  */
+/* DECORATION SHELF */
 
 .shelf-wrap {
   position: relative;
@@ -116,47 +116,190 @@
   display: block;
 }
 
-.shelf-top-items {
-  position: absolute;
-  top: 13%;
-  left: 13%;
-  right: 13%;
-  height: 14%;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-}
-
-.shelf-bottom-items {
-  position: absolute;
-  top: 45%;
-  left: 15%;
-  right: 15%;
-  height: 14%;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-}
-
 .shelf-slot {
+  position: absolute;
+  transform: translate(-50%, -100%);
   width: clamp(55px, 5.5vw, 90px);
   height: clamp(55px, 5.5vw, 90px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.shelf-slot:hover {
+  transform: translate(-50%, -100%) scale(1.1);
 }
 
 .shelf-slot img {
-  width: clamp(44px, 4.4vw, 72px);
-  height: clamp(44px, 4.4vw, 72px);
+  width: 200%;
+  height: clamp(50px, 4.4vw, 72px);
   object-fit: contain;
 }
 
 .shelf-slot-empty {
-  width: clamp(42px, 4.2vw, 68px);
-  height: clamp(42px, 4.2vw, 68px);
-  border: 1.5px dashed rgba(180, 140, 80, 0.5);
+  width: clamp(50px, 3.8vw, 62px);
+  height: clamp(50px, 3.8vw, 62px);
+  border: 2px dashed rgb(110, 151, 205);
   border-radius: 4px;
+  transition: border-color 0.15s;
+}
+
+.shelf-slot:hover .shelf-slot-empty {
+  border-color: rgb(110, 151, 205);
+}
+
+/* Shelf popup */
+.shelf-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+.shelf-popup {
+  background: #fff;
+  border: 1.5px solid #ddd;
+  border-radius: 4px;
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.shelf-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shelf-popup-close:hover {
+  background: #efefef;
+  color: #1a1a1a;
+}
+
+.shelf-popup-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.shelf-popup-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #777;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.shelf-popup-current {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.shelf-popup-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shelf-popup-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.shelf-popup-item:hover {
+  border-color: #aaa;
+  background: #f7f7f7;
+}
+
+.shelf-popup-item.active {
+  border-color: #1a1a1a;
+  background: #f7f7f7;
+}
+
+.shelf-popup-item.other-slot {
+  opacity: 0.8;
+}
+
+.shelf-popup-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  background: #f0f0f0;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.shelf-popup-item span {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.shelf-popup-slot-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #777;
+  background: #f0f0f0;
+  border-radius: 3px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+}
+
+.shelf-popup-remove {
+  padding: 4px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #a32d2d;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.shelf-popup-remove:hover {
+  background: #fff1f2;
+  border-color: #fecdd3;
 }
 
 @media (max-width: 800px) {

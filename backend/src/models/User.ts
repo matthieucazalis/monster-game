@@ -19,6 +19,15 @@ const User = {
     return rows[0];
   },
 
+  // Pour les opérations sensibles nécessitant une vérification de mot de passe
+  findByIdWithPassword: async (id: number): Promise<UserRow | undefined> => {
+    const [rows] = await pool.query<UserRow[]>(
+      "SELECT * FROM users WHERE id = ?",
+      [id],
+    );
+    return rows[0];
+  },
+
   create: async ({
     email,
     password,

@@ -3,7 +3,10 @@ import Decoration from "../models/Decoration";
 import { pool } from "../config/database";
 import { CoinRow, UserDecorationRow } from "../types";
 
-const getAllDecorations = async (_req: Request, res: Response): Promise<void> => {
+const getAllDecorations = async (
+  _req: Request,
+  res: Response,
+): Promise<void> => {
   try {
     const decorations = await Decoration.findAll();
     res.json(decorations);
@@ -70,48 +73,63 @@ const buyDecoration = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-const toggleEquipDecoration = async (req: Request, res: Response): Promise<void> => {
+// Place une déco dans un slot (1-6), retire l'ancienne si besoin
+const placeDecoration = async (req: Request, res: Response): Promise<void> => {
   try {
     const { userDecorationId } = req.params;
-    const { is_equipped } = req.body as { is_equipped: boolean };
+    const { slot } = req.body as { slot: number };
 
+    if (!slot || slot < 1 || slot > 6) {
+      res.status(400).json({ message: "Slot invalide (1-6)" });
+      return;
+    }
+
+    // Vérifier que la déco appartient à l'utilisateur
     const [rows] = await pool.query<UserDecorationRow[]>(
       "SELECT * FROM user_decorations WHERE id = ? AND user_id = ?",
       [userDecorationId, req.user!.id],
     );
 
     if (rows.length === 0) {
-      res.status(404).json({
-        message: "Décoration introuvable dans votre inventaire",
-      });
+      res
+        .status(404)
+        .json({ message: "Décoration introuvable dans votre inventaire" });
       return;
     }
 
-    await Decoration.setEquipped(userDecorationId, is_equipped);
+    // Vérifier que la même déco n'est pas déjà dans un autre slot
+    const currentDeco = rows[0];
+    if (currentDeco.is_equipped && currentDeco.position_x !== slot) {
+      // Elle est dans un autre slot, on la retire d'abord
+      await pool.query(
+        "UPDATE user_decorations SET is_equipped = FALSE, position_x = NULL WHERE id = ? AND user_id = ?",
+        [userDecorationId, req.user!.id],
+      );
+    }
 
-    res.json({
-      message: is_equipped ? "Décoration équipée" : "Décoration déséquipée",
-    });
+    // Vider le slot cible si occupé par une autre déco
+    await pool.query(
+      "UPDATE user_decorations SET is_equipped = FALSE, position_x = NULL WHERE user_id = ? AND position_x = ? AND id != ?",
+      [req.user!.id, slot, userDecorationId],
+    );
+
+    // Placer la déco dans le slot
+    await pool.query(
+      "UPDATE user_decorations SET is_equipped = TRUE, position_x = ? WHERE id = ? AND user_id = ?",
+      [slot, userDecorationId, req.user!.id],
+    );
+
+    res.json({ message: "Décoration placée dans le slot " + slot, slot });
   } catch (error) {
-    console.error("Erreur toggleEquipDecoration:", error);
+    console.error("Erreur placeDecoration:", error);
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
 
-const updateDecorationPosition = async (req: Request, res: Response): Promise<void> => {
+// Retire une déco de son slot
+const removeDecoration = async (req: Request, res: Response): Promise<void> => {
   try {
     const { userDecorationId } = req.params;
-    const { position_x, position_y } = req.body as {
-      position_x: number | undefined;
-      position_y: number | undefined;
-    };
-
-    if (position_x === undefined || position_y === undefined) {
-      res.status(400).json({
-        message: "position_x et position_y sont obligatoires",
-      });
-      return;
-    }
 
     const [rows] = await pool.query<UserDecorationRow[]>(
       "SELECT * FROM user_decorations WHERE id = ? AND user_id = ?",
@@ -119,20 +137,20 @@ const updateDecorationPosition = async (req: Request, res: Response): Promise<vo
     );
 
     if (rows.length === 0) {
-      res.status(404).json({
-        message: "Décoration introuvable dans votre inventaire",
-      });
+      res
+        .status(404)
+        .json({ message: "Décoration introuvable dans votre inventaire" });
       return;
     }
 
-    await Decoration.updatePosition(userDecorationId, position_x, position_y);
+    await pool.query(
+      "UPDATE user_decorations SET is_equipped = FALSE, position_x = NULL WHERE id = ? AND user_id = ?",
+      [userDecorationId, req.user!.id],
+    );
 
-    res.json({
-      message: "Position mise à jour",
-      position: { x: position_x, y: position_y },
-    });
+    res.json({ message: "Décoration retirée du slot" });
   } catch (error) {
-    console.error("Erreur updateDecorationPosition:", error);
+    console.error("Erreur removeDecoration:", error);
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
@@ -141,6 +159,6 @@ export {
   getAllDecorations,
   getMyDecorations,
   buyDecoration,
-  toggleEquipDecoration,
-  updateDecorationPosition,
+  placeDecoration,
+  removeDecoration,
 };

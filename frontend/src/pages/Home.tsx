@@ -25,6 +25,7 @@ interface Decoration {
   name: string;
   image_url: string;
   is_equipped: boolean;
+  position_x: number | null;
 }
 
 interface User {
@@ -37,7 +38,7 @@ interface User {
 export default function Home() {
   const navigate = useNavigate();
   const [monster, setMonster] = useState<Monster | null>(null);
-  const [decorations, setDecorations] = useState<Decoration[]>([]);
+  const [allDecorations, setAllDecorations] = useState<Decoration[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [coins, setCoins] = useState<number>(0);
   const [showTutorial, setShowTutorial] = useState(false);
@@ -66,6 +67,15 @@ export default function Home() {
     } catch {}
   };
 
+  const fetchDecorations = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/decorations/my`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) setAllDecorations(await res.json());
+    } catch {}
+  };
+
   const fetchData = async () => {
     try {
       const headers = { Authorization: `Bearer ${token}` };
@@ -82,17 +92,13 @@ export default function Home() {
       }
 
       if (monsterRes.ok) setMonster(await monsterRes.json());
-      if (decorationsRes.ok) {
-        const data = await decorationsRes.json();
-        setDecorations(data.filter((d: Decoration) => d.is_equipped));
-      }
+      if (decorationsRes.ok) setAllDecorations(await decorationsRes.json());
       if (userRes.ok) {
         const userData = await userRes.json();
         setCoins(userData.coins);
         setUser(userData);
         if (userData.is_first_login) setShowTutorial(true);
       } else {
-        // Fallback localStorage
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
           const parsed = JSON.parse(storedUser);
@@ -119,20 +125,14 @@ export default function Home() {
         setError(data.message);
         return;
       }
-
-      // Mettre à jour les coins immédiatement
-      if (data.coinsEarned) {
-        setCoins((prev) => prev + data.coinsEarned);
-      }
-
+      if (data.coinsEarned) setCoins((prev) => prev + data.coinsEarned);
       if (data.completed) {
         setMonster(null);
         alert(data.message);
-        await fetchCoins(); // Resync depuis l'API
       } else {
         setMonster(data.monster);
-        await fetchCoins(); // Resync depuis l'API
       }
+      await fetchCoins();
     } catch {
       setError("Erreur lors du level up");
     }
@@ -152,6 +152,9 @@ export default function Home() {
       }
     } catch {}
   };
+
+  // Décos équipées (pour l'affichage sur le comptoir)
+  const equippedDecorations = allDecorations.filter((d) => d.is_equipped);
 
   if (loading)
     return (
@@ -200,7 +203,7 @@ export default function Home() {
                   Aucun monstre actif.
                 </p>
                 <button
-                  onClick={() => navigate("/boutique")}
+                  onClick={() => navigate("/shop")}
                   style={{
                     padding: "8px 20px",
                     borderRadius: 4,
@@ -218,7 +221,11 @@ export default function Home() {
           </div>
 
           <div className="shelf-area">
-            <DecorationShelf decorations={decorations} />
+            <DecorationShelf
+              decorations={equippedDecorations}
+              allDecorations={allDecorations}
+              onUpdate={fetchDecorations}
+            />
           </div>
         </div>
       </div>
