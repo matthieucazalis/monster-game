@@ -10,7 +10,10 @@
 
 .auth-wrap {
   min-height: 100vh;
-  background: #008080; /* Vert canard officiel bureau Windows 98 */
+  background: var(
+    --win-bg,
+    #008080
+  ); /* Vert canard officiel bureau Windows 98 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +43,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 4px;
-  background: linear-gradient(to right, #000080, #1084d0); /* Dégradé bleu */
+  background: linear-gradient(
+    to right,
+    var(--win-accent, #000080),
+    var(--win-accent2, #1084d0)
+  ); /* Dégradé bleu */
 }
 
 .auth-titlebar-label {

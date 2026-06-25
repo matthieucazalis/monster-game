@@ -1,4 +1,8 @@
+SET NAMES 'utf8mb4';
+CREATE DATABASE IF NOT EXISTS monster_game CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 USE monster_game;
+
 
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,7 +57,7 @@ CREATE TABLE IF NOT EXISTS decorations (
   name VARCHAR(100) NOT NULL,
   description TEXT,
   price INT NOT NULL,
-  image_url VARCHAR(255),
+  image_url VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS user_decorations (
@@ -70,11 +74,11 @@ CREATE TABLE IF NOT EXISTS user_decorations (
 );
 
 INSERT INTO species (name, unlock_cost, hunger_interval_hours, max_level, base_image_url, is_starter, lore) VALUES
-('Dianthus', 45, 4, 9, '/species/dianthus', TRUE, 'Né dans les jardins oubliés, Dianthus est une créature timide qui s\'éveille lentement à la vie. Sa fragilité cache une volonté de fer, et ceux qui prennent soin de lui découvrent un compagnon d\'une fidélité sans égale. On dit que sa floraison finale illumine même les nuits les plus sombres.'),
-('Callistemon', 50, 6, 9, '/species/callistemon', FALSE, 'Callistemon est né du feu et de la sève. Farouche et indépendant, il ne s\'attache qu\'à ceux qui ont su gagner sa confiance. Sa transformation finale révèle une créature d\'une beauté ardente, dont les flammes réchauffent sans brûler.'),
-('Chicory', 60, 6, 9, '/species/chicory', FALSE, 'Chicory pousse dans les terrains difficiles là où les autres abandonnent. Humble et persévérant, il accumule une sagesse silencieuse au fil des niveaux. Sa forme finale dévoile un être contemplatif dont la présence apaise tout ce qui l\'entoure.'),
-('Galanthus', 70, 8, 12, '/species/galanthus', FALSE, 'Galanthus est l\'enfant de l\'hiver et du renouveau. Plus long à élever que les autres, il révèle progressivement une nature complexe et profonde. Son histoire est celle d\'une renaissance perpétuelle, et sa forme ultime incarne l\'espoir dans sa forme la plus pure.'),
-('Baptisia', 100, 6, 9, '/species/baptisia', FALSE, 'Baptisia est une créature rare et précieuse. Son élevage demande patience et richesse, mais la récompense est à la hauteur du sacrifice. Sa forme finale dévoile une puissance tranquille et une élégance sauvage que peu d\'yeux ont eu la chance de contempler.');
+('Dianthus', 45, 4, 9, '/species/dianthus', TRUE, 'Dianthus est le compagnon idéal pour les débutants. Facile à élever et toujours joyeux, il apporte une énergie positive à son entourage. Sa transformation finale révèle une force différente et rebelle, la sagesse n`est pas toujours là où on l`attend.'),
+('Callistemon', 50, 6, 9, '/species/callistemon', FALSE, 'Callistemon est un esprit libre et indomptable. Il aime explorer et découvrir de nouveaux horizons. Sa forme finale incarne la liberté et l`audace avec force, inspirant ceux qui le rencontrent à suivre leur propre chemin.'),
+('Chicory', 60, 6, 9, '/species/chicory', FALSE, 'Chicory est un être mystérieux et énigmatique. Il aime se cacher dans l`ombre et observer le monde qui l`entoure. Il incarne la seconde chance à la vie, mais même adulte, il reste lui même.'),
+('Galanthus', 70, 8, 12, '/species/galanthus', FALSE, 'Galanthus est ###### une creature douce et gentille, sa forme finale est ######### ##### ##### #### you should be seeing that. #### ######### ## ####'),
+('Baptisia', 100, 6, 9, '/species/baptisia', FALSE, 'Baptisia est le propre gardien de ces terre. Ses ailles sont symbole de grandeur et force étant donné qu`il sagit de la seule espèce pouvant voler. SAUF ### ### #######');
 
 INSERT INTO decorations (name, description, price, image_url) VALUES
 ('Jukebox', 'Il fait de la musique, normalement.', 30, '/objets/Jukebox.png'),

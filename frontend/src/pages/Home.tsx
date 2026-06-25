@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import MonsterCard from "../components/monsterCard";
 import DecorationShelf from "../components/decorationShelf";
 import "./style/home.css";
+import { applyTheme } from "../utils/theme";
 
 const API_URL =
   (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
@@ -35,21 +36,31 @@ interface User {
   is_first_login: boolean;
 }
 
-function applyTheme() {
-  const bg = localStorage.getItem("ui_bg_color") ?? "#008080";
-  const accent = localStorage.getItem("ui_accent_color") ?? "#000080";
-  document.body.style.setProperty("--win-bg", bg);
-  document.body.style.setProperty("--win-accent", accent);
-}
-
 export default function Home() {
   const navigate = useNavigate();
   const [monster, setMonster] = useState<Monster | null>(null);
   const [allDecorations, setAllDecorations] = useState<Decoration[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
+  const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const tutorialSteps = [
+    {
+      selector: '[data-tutorial="monster"]',
+      text: "Voici ton monstre ! Une fois qu'il a faim, clique sur le bouton qui apparaît pour le faire évoluer.",
+    },
+    {
+      selector: '[data-tutorial="boutique"]',
+      text: "Rends-toi à la Boutique pour acheter de nouvelles espèces de monstres et des décorations.",
+    },
+    {
+      selector: '[data-tutorial="inventaire"]',
+      text: "Dans l'Inventaire, retrouve tous tes monstres et décorations, et active celui que tu veux faire grandir.",
+    },
+  ];
 
   const token = localStorage.getItem("token");
 
@@ -61,6 +72,17 @@ export default function Home() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (!showTutorial) return;
+    const update = () => {
+      const el = document.querySelector(tutorialSteps[tutorialStep].selector);
+      if (el) setTargetRect(el.getBoundingClientRect());
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [showTutorial, tutorialStep]);
 
   const fetchDecorations = async () => {
     try {
@@ -119,7 +141,6 @@ export default function Home() {
         return;
       }
 
-      // On prévient la Navbar que l'argent a changé pour qu'elle se recharge
       window.dispatchEvent(new Event("update-coins"));
 
       if (data.completed) {
@@ -148,6 +169,14 @@ export default function Home() {
     } catch {}
   };
 
+  const nextTutorialStep = () => {
+    if (tutorialStep < tutorialSteps.length - 1) {
+      setTutorialStep((s) => s + 1);
+    } else {
+      closeTutorial();
+    }
+  };
+
   const equippedDecorations = allDecorations.filter((d) => d.is_equipped);
 
   if (loading)
@@ -167,8 +196,6 @@ export default function Home() {
       <Navbar />
 
       <div className="game-area">
-        {/* L'ancien badge des coins a été supprimé d'ici */}
-
         {error && (
           <p style={{ color: "#ff0000", fontSize: 11, fontFamily: "Arial" }}>
             {error}
@@ -176,7 +203,7 @@ export default function Home() {
         )}
 
         <div className="game-main">
-          <div className="monster-area">
+          <div className="monster-area" data-tutorial="monster">
             {monster ? (
               <MonsterCard monster={monster} onLevelUp={handleLevelUp} />
             ) : (
@@ -199,18 +226,37 @@ export default function Home() {
         </div>
       </div>
 
-      {showTutorial && (
-        <div className="tutorial-overlay">
-          <div className="tutorial-modal">
-            <div className="tutorial-modal-body">
-              <h2>Bienvenue dans Monster Game !</h2>
-              <p>Le tutoriel arrive bientôt...</p>
-              <button className="tutorial-btn" onClick={closeTutorial}>
-                Commencer !
+      {showTutorial && targetRect && (
+        <>
+          <div
+            className="tutorial-spot"
+            style={{
+              top: targetRect.top - 8,
+              left: targetRect.left - 8,
+              width: targetRect.width + 16,
+              height: targetRect.height + 16,
+            }}
+          />
+          <div
+            className="tutorial-tooltip"
+            style={{
+              top: targetRect.bottom + 16,
+              left: Math.min(targetRect.left, window.innerWidth - 300),
+            }}
+          >
+            <p>{tutorialSteps[tutorialStep].text}</p>
+            <div className="tutorial-tooltip-actions">
+              <span className="tutorial-step-count">
+                {tutorialStep + 1} / {tutorialSteps.length}
+              </span>
+              <button className="tutorial-btn" onClick={nextTutorialStep}>
+                {tutorialStep < tutorialSteps.length - 1
+                  ? "Suivant"
+                  : "Terminer"}
               </button>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

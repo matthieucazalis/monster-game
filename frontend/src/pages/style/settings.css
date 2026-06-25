@@ -1,35 +1,22 @@
-/* ============================================================
-   SETTINGS — Windows 98 / Control Panel Style
-   ============================================================ */
-
 .settings-wrap,
 .settings-wrap * {
-  /* Force la typographie rétro et standardisée de ta navbar */
   font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
   box-sizing: border-box;
 }
 
 .settings-wrap {
   min-height: 100vh;
-  background: #008080; /* Vert canard Windows 98 */
+  background: var(--win-bg, #008080);
   display: flex;
   flex-direction: column;
 }
 
-/* ============================================================
-   DESKTOP CONTAINER
-   ============================================================ */
-
 .settings-desktop {
   width: 100%;
-  max-width: 650px; /* Format boîte de dialogue centré */
+  max-width: 650px;
   margin: 30px auto;
   padding: 0 16px;
 }
-
-/* ============================================================
-   MAIN WINDOW
-   ============================================================ */
 
 .settings-window {
   background: #c0c0c0;
@@ -41,17 +28,17 @@
     inset 1px 1px 0 #dfdfdf;
 }
 
-/* ============================================================
-   TITLEBAR
-   ============================================================ */
-
 .settings-titlebar {
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 6px;
-  background: linear-gradient(to right, #000080, #1084d0);
+  background: linear-gradient(
+    to right,
+    var(--win-accent, #000080),
+    var(--win-accent2, #1084d0)
+  );
 }
 
 .settings-titlebar-label {
@@ -86,10 +73,6 @@
   padding: 1px 0 0 1px;
 }
 
-/* ============================================================
-   WINDOW BODY & SECTIONS
-   ============================================================ */
-
 .settings-window-body {
   padding: 20px;
 }
@@ -98,7 +81,6 @@
   margin-bottom: 24px;
   padding: 16px;
   background: #c0c0c0;
-  /* Effet GroupBox classique de Windows 98 */
   border-style: solid;
   border-width: 2px;
   border-color: #808080 #ffffff #ffffff #808080;
@@ -118,10 +100,6 @@
   text-transform: none;
   letter-spacing: normal;
 }
-
-/* ============================================================
-   NOTICES
-   ============================================================ */
 
 .settings-notices {
   margin-bottom: 20px;
@@ -148,10 +126,6 @@
   color: #800000;
 }
 
-/* ============================================================
-   INPUTS (Deep Inset)
-   ============================================================ */
-
 .settings-input {
   width: 100%;
   padding: 6px 8px;
@@ -171,10 +145,6 @@
 .settings-input:focus {
   background: #ffffff;
 }
-
-/* ============================================================
-   BUTTONS (Standard Retro Bevel)
-   ============================================================ */
 
 .settings-submit-btn,
 .settings-cancel-btn,
@@ -203,10 +173,9 @@
 .settings-danger-btn:active {
   border-color: #404040 #ffffff #ffffff #404040;
   box-shadow: none;
-  padding: 7px 13px 5px 15px; /* Décale le texte au clic */
+  padding: 7px 13px 5px 15px;
 }
 
-/* Variantes spécifiques */
 .settings-action-btn {
   width: auto;
   min-width: 180px;
@@ -220,10 +189,6 @@
 .settings-danger-btn.execution {
   background: #ffd8d8;
 }
-
-/* ============================================================
-   ACCOUNT ROW LAYOUT
-   ============================================================ */
 
 .settings-info-row {
   display: flex;
@@ -255,7 +220,6 @@
   color: #000000;
 }
 
-/* Formulaires d'édition déployés */
 .settings-edit-form {
   display: flex;
   flex-direction: column;
@@ -302,15 +266,11 @@
   margin-top: 8px;
 }
 
-/* ============================================================
-   CREDITS PANEL (Simulated ListView)
-   ============================================================ */
-
 .settings-credits {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: #ffffff; /* Fond blanc comme un explorateur de fichiers */
+  background: #ffffff;
   border-style: solid;
   border-width: 2px;
   border-color: #404040 #e0e0e0 #e0e0e0 #404040;
@@ -329,7 +289,7 @@
 }
 
 .settings-credit-row:nth-child(even) {
-  background: #f5f5f5; /* Alternance de lignes */
+  background: #f5f5f5;
 }
 
 .settings-credit-role {
@@ -344,19 +304,48 @@
   color: #000000;
 }
 
-/* ============================================================
-   AJOUTS EXTENSION — MODE WINDOWS 98 SETUP WIZARD (REGISTER)
-   ============================================================ */
+/* Personnalisation des couleurs */
+.settings-color-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #d4d4d4;
+  padding: 10px 12px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #808080 #ffffff #ffffff #808080;
+  margin-bottom: 10px;
+}
+
+.settings-color-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.settings-color-picker {
+  width: 48px;
+  height: 28px;
+  padding: 0;
+  background: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #404040 #e0e0e0 #e0e0e0 #404040;
+  box-shadow:
+    inset 1px 1px 0 #000000,
+    inset -1px -1px 0 #808080;
+  cursor: pointer;
+}
 
 .setup-screen-wrap {
   min-height: 100vh;
-  background: #008080; /* Fond vert-bleu canard Windows 98 */
+  background: var(--win-bg, #008080);
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
 }
 
-/* Bandeau horizontal supérieur noir/bleu dégradé */
 .setup-top-banner {
   background: linear-gradient(to right, #000000, #000080);
   height: 45px;
@@ -377,7 +366,6 @@
   font-size: 14px;
 }
 
-/* Organisation globale de l'installateur */
 .setup-main-layout {
   display: flex;
   flex: 1;
@@ -551,7 +539,6 @@
   width: 90px;
 }
 
-/* Adaptations responsives basiques pour l'éditeur */
 @media (max-width: 768px) {
   .setup-main-layout {
     flex-direction: column;

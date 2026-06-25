@@ -1,0 +1,37 @@
+/* ============================================================
+   WIN98 TOKENS — déclaration centrale
+   ============================================================
+   --win-bg et --win-accent (+ --win-accent2, calculé) sont
+   personnalisables par l'utilisateur dans Settings et écrasés
+   au runtime via JS (voir src/utils/theme.ts) sur <html>.
+   Toutes les autres variables sont fixes (palette Win98 standard).
+   ============================================================ */
+
+:root {
+  --win-bg: #008080; /* bureau — personnalisable */
+  --win-accent: #000080; /* barre de titre — personnalisable */
+  --win-accent2: #1084d0; /* côté droit du dégradé de titre */
+
+  --win-silver: #c0c0c0; /* gris Windows standard */
+  --win-dark: #808080; /* ombre bevel sombre */
+  --win-darker: #404040;
+  --win-light: #ffffff; /* reflet bevel clair */
+  --win-text: #000000;
+  --win-title-text: #ffffff;
+  --win-font: "Arial", "MS Sans Serif", sans-serif;
+  --win-font-size: 11px;
+}
+
+/* ============================================================
+   FOND GLOBAL html/body
+   ============================================================
+   Sans ceci, html/body restent blancs par défaut. Si le contenu
+   d'une page dépasse légèrement 100vh (scrollbar, barre d'adresse
+   mobile, etc.), on voit une bande blanche derrière le conteneur
+   de la page. On aligne html/body sur la même couleur --win-bg.
+   ============================================================ */
+html,
+body {
+  background: var(--win-bg);
+  min-height: 100%;
+}

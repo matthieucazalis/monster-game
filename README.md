@@ -1,74 +1,50 @@
-# React + TypeScript + Vite
+# MONSTER GAME!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenu dans le déposite du très suspicieux et semblable d'un jeu tamagochi simple.
 
-Currently, two official plugins are available:
+## COMMENT LANCER CE JEU ?!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+c'est simple!
 
-## React Compiler
+il n'y a qu'à suivre ces instructions:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-installe le dossier en entier (en même temps c'est le jeu.)
 
-## Expanding the ESLint configuration
+-pour le docker, se placer dans le dossier : cd backend. Tu t'assures que le .env contient bien :
+DB_HOST=localhost
+DB_PORT=3307
+DB_USER=admin
+DB_PASSWORD=adminpassword
+DB_NAME=monster_game
+JWT_SECRET=votre_secret_jwt_ici
+PORT=3000.
+-pour lancer les conteneurs : docker compose up -d. Et verifie que tout tourne avec : docker ps
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-puis tourne "npm run dev" sur monster-game/ dans ton terminale
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-et clique sur le lien (normalement http://localhost:5173/)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+-pour finir, fais ton compte, et voilà !
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### SPOILER /!\
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+voici ce que contient ce projet en résumé:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+-backend
+là où nous possèdons la partie database (soit base de données en FR) et toute la partie "non visible" permmettant de faire la majorité des liaisons besoin dans le fichier. Comme les controlles (controllers) ainsi que les routes.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# monster-game
+-frontend
+là où cette fois ci, tu peux tout voir.
+il y a le dossier possèdant toutes les images utilisé en .PNG ainsi que les pages en gros et leurs styles !
+
+-ce qui est possible:
+tu veux savoir nos petits points en plus ?
+et bien il est possible dans les paramètres par exemple, de pouvoir changer les deux couleurs principales à ta gise. Tu souhaites avoir une ambiance rosé ? je t'en pris.
+de plus, full aesthetique à là Windows 98 et notament, des minis fenètres intégré où tu peux en intéragir avec certaines.
+pour finir, chaque petits monstres qui sont visibles dans ce projet, ont été chacun créé pour ce seul but par une véritable artiste et non de l'IA.
+
+# CREDITS :
+
+CODEURS : CAZALIS MAtthieu & BOURMAUD Simon
+ARTISTE : Mad.davvg101
+IMAGES AUTRE : Pinterest

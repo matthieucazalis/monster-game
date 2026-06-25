@@ -78,41 +78,31 @@ export default function Register() {
 
   return (
     <div className="setup-screen-wrap">
-      {/* Bandeau d'en-tête de l'installateur global */}
-      <div className="setup-top-banner">
-        <span className="setup-banner-logo">💻</span>
-        <span className="setup-banner-text">
-          Installation de <strong>Windows 98 — Monster Game Edition</strong>
-        </span>
-      </div>
-
       <div className="setup-main-layout">
         {/* Colonne latérale gauche de progression d'installation */}
         <aside className="setup-sidebar">
           <ul className="setup-steps-list">
             <li className="setup-step-item done">
-              Préparation de l'installation
+              Avoir cliqué sur le lien du jeu
             </li>
             <li className="setup-step-item active">Collecte d'informations</li>
-            <li className="setup-step-item">
-              Copie des fichiers sur le disque
-            </li>
-            <li className="setup-step-item">Configuration du Tamagotchi</li>
+            <li className="setup-step-item">Lancement du tutoriel</li>
+            <li className="setup-step-item">Bon jeu !</li>
           </ul>
           <div className="setup-sidebar-footer">
             <div className="setup-countdown">
-              <span className="countdown-label">Temps restant :</span>
-              <span className="countdown-value">35 minutes</span>
+              <span className="countdown-label">CAZALIS Matthieu</span>
+              <span className="countdown-value">BOURMAUD SIMON</span>
             </div>
-            <div className="setup-vendor-logo">Microsoft</div>
+            <div className="setup-vendor-logo">Mad.dawg101</div>
           </div>
         </aside>
 
-        {/* Fenêtre principale de l'assistant (Wizard Dialog) */}
+        {/* Fenêtre principale (Wizard Dialog) */}
         <main className="setup-wizard-window">
           <div className="auth-titlebar">
             <span className="auth-titlebar-label">
-              Assistant Installation de Windows 98
+              Assistant de création de compte
             </span>
             <div className="auth-titlebar-btns">
               <button
@@ -126,21 +116,18 @@ export default function Register() {
 
           <div className="setup-wizard-body">
             <h2 className="setup-section-title">
-              Sélection des paramètres utilisateur
+              Création de votre compte joueur
             </h2>
             <p className="setup-section-desc">
-              Veuillez configurer vos identifiants d'accès au système pour
-              enregistrer votre profil de joueur.
+              Veuillez configurer vos identifiants pour enregistrer votre profil
+              de joueur.
             </p>
 
             <div className="setup-wizard-content-split">
-              {/* Zone Gauche : Spoilers et Contenu du jeu intégrés proprement */}
               <div className="setup-info-panel">
                 <div className="setup-info-box">
-                  <span className="info-box-icon">⚠️</span>
                   <p className="auth-spoiler-title">TW : Spoilers</p>
                 </div>
-                <p className="auth-spoiler-label">COMPOSANTS À INSTALLER :</p>
                 <ul className="auth-feature-list">
                   <li className="auth-feature-item">
                     5 monstres avec designs et évolutions uniques !
@@ -154,7 +141,6 @@ export default function Register() {
                 </ul>
               </div>
 
-              {/* Zone Droite : Formulaire d'inscription */}
               <div className="setup-form-panel">
                 <div className="auth-field">
                   <label className="auth-label" htmlFor="pseudo">

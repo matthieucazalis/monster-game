@@ -4,10 +4,13 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap");
 
+/* =========================================================
+   WIN98 TOKENS — voir src/pages/style/theme.css (--win-bg,
+   --win-accent, etc.) pour la déclaration centrale, surchargée
+   au runtime via JS sur <html> par src/utils/theme.ts.
+   Les tokens spécifiques à cette page restent ici.
+   ========================================================= */
 :root {
-  --win-bg: #008080;
-
-  --win-silver: #c0c0c0;
   --win-light: #dfdfdf;
   --win-dark: #808080;
 
@@ -71,8 +74,8 @@
 .inventory-card-titlebar {
   background-image: linear-gradient(
     to right,
-    var(--win-blue-1),
-    var(--win-blue-2)
+    var(--win-accent, var(--win-blue-1)),
+    var(--win-accent2, var(--win-blue-2))
   );
 }
 

@@ -48,7 +48,7 @@ export default function Navbar() {
         <div className="coins-icon">
           <img
             src="/images/money-icon.png"
-            alt="Coins" // Correction ici : c'était écrit "Settings"
+            alt="Coins" 
             width="35"
             height="35"
           />
@@ -70,6 +70,7 @@ export default function Navbar() {
         <button
           className={`navbar-item ${isActive("/inventory") ? "active" : ""}`}
           onClick={() => navigate("/inventory")}
+          data-tutorial="inventaire"
         >
           <img
             src="/images/inventory-icon.png"
@@ -84,6 +85,7 @@ export default function Navbar() {
         <button
           className={`navbar-item ${isActive("/shop") ? "active" : ""}`}
           onClick={() => navigate("/shop")}
+          data-tutorial="boutique"
         >
           <img
             src="/images/shop-icon.png"

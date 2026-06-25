@@ -10,7 +10,7 @@
 
 .shop-wrap {
   min-height: 100vh;
-  background: #008080;
+  background: var(--win-bg, #008080);
 }
 
 /* ============================================================
@@ -49,7 +49,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 6px;
-  background: linear-gradient(to right, #000080, #1084d0);
+  background: linear-gradient(
+    to right,
+    var(--win-accent, #000080),
+    var(--win-accent2, #1084d0)
+  );
 }
 
 .shop-titlebar-label {

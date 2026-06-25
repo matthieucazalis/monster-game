@@ -26,7 +26,11 @@
   height: 32px;
   padding: 0 6px;
 
-  background: linear-gradient(to right, #000080, #1084d0);
+  background: linear-gradient(
+    to right,
+    var(--win-accent, #000080),
+    var(--win-accent2, #1084d0)
+  );
 
   flex-shrink: 0;
 }

@@ -8,21 +8,10 @@
 }
 
 /* ============================================================
-   WIN98 TOKENS  (overridden at runtime via JS on <body>)
+   WIN98 TOKENS — voir src/pages/style/theme.css (--win-bg,
+   --win-accent, etc.) pour la déclaration centrale, surchargée
+   au runtime via JS sur <html> par src/utils/theme.ts.
    ============================================================ */
-:root {
-  --win-bg: #008080; /* bureau — personnalisable */
-  --win-accent: #000080; /* barre de titre — personnalisable */
-  --win-accent2: #1084d0; /* côté droit du dégradé titre */
-  --win-silver: #c0c0c0; /* gris Windows standard */
-  --win-dark: #808080; /* ombre bevel sombre */
-  --win-darker: #404040;
-  --win-light: #ffffff; /* reflet bevel clair */
-  --win-text: #000000;
-  --win-title-text: #ffffff;
-  --win-font: "Arial", "MS Sans Serif", sans-serif;
-  --win-font-size: 11px;
-}
 
 /* ============================================================
    PAGE
@@ -138,61 +127,56 @@
 }
 
 /* ============================================================
-   TUTORIAL OVERLAY
+   TUTORIAL — spotlight + tooltip guidé multi-étapes
    ============================================================ */
-.tutorial-overlay {
+.tutorial-spot {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 100;
+  border: 3px solid #ffff00;
+  box-shadow:
+    0 0 0 4000px rgba(0, 0, 0, 0.5),
+    0 0 12px 2px #ffff00;
+  pointer-events: none;
+  transition:
+    top 0.25s ease,
+    left 0.25s ease,
+    width 0.25s ease,
+    height 0.25s ease;
 }
 
-/* Fenêtre Win98 */
-.tutorial-modal {
+.tutorial-tooltip {
+  position: fixed;
+  z-index: 101;
+  width: 280px;
   background: var(--win-silver);
-  width: 360px;
+  padding: 14px;
   box-shadow:
     inset -1px -1px 0 var(--win-dark),
     inset 1px 1px 0 var(--win-light),
     3px 3px 0 var(--win-darker);
+  transition:
+    top 0.25s ease,
+    left 0.25s ease;
 }
 
-/* Barre de titre */
-.tutorial-modal::before {
-  content: "🎉 Monster Game";
-  display: flex;
-  align-items: center;
-  padding: 0 6px;
-  height: 22px;
-  background: linear-gradient(to right, var(--win-accent), var(--win-accent2));
-  color: var(--win-title-text);
-  font-family: var(--win-font);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.tutorial-modal-body {
-  padding: 20px 20px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
-}
-
-.tutorial-modal-body h2 {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--win-text);
-}
-
-.tutorial-modal-body p {
+.tutorial-tooltip p {
   font-size: 12px;
   color: var(--win-text);
   line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.tutorial-tooltip-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tutorial-step-count {
+  font-size: 11px;
+  color: var(--win-dark);
+  font-weight: 700;
 }
 
 .tutorial-btn {

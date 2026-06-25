@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./style/shop.css";
+import { applyTheme } from "../utils/theme";
 
 const API_URL =
   (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
@@ -45,6 +46,7 @@ export default function Shop() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    applyTheme();
     if (!token) {
       navigate("/login");
       return;

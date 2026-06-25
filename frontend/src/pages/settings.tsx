@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./style/settings.css";
+import {
+  applyTheme,
+  saveTheme,
+  clearStoredTheme,
+  getStoredTheme,
+  DEFAULT_THEME,
+  ThemeColors,
+} from "../utils/theme";
 
 const API_URL =
   (import.meta as any).env.VITE_API_URL ?? "http://localhost:3000";
@@ -30,6 +38,9 @@ export default function Settings() {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  // Personnalisation des couleurs (fond + barre de titre)
+  const [themeColors, setThemeColors] = useState<ThemeColors>(getStoredTheme());
 
   useEffect(() => {
     if (!token) {
@@ -214,6 +225,28 @@ export default function Settings() {
     }
   };
 
+  // --- Personnalisation des couleurs ---
+
+  const handleBgColorChange = (value: string) => {
+    const updated = { ...themeColors, bgColor: value };
+    setThemeColors(updated);
+    applyTheme(updated);
+    saveTheme(updated);
+  };
+
+  const handleTitlebarColorChange = (value: string) => {
+    const updated = { ...themeColors, titlebarColor: value };
+    setThemeColors(updated);
+    applyTheme(updated);
+    saveTheme(updated);
+  };
+
+  const handleResetColors = () => {
+    setThemeColors({ ...DEFAULT_THEME });
+    applyTheme(DEFAULT_THEME);
+    clearStoredTheme();
+  };
+
   return (
     <div className="settings-wrap">
       <Navbar />
@@ -393,6 +426,42 @@ export default function Settings() {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Personnalisation */}
+            <div className="settings-section">
+              <h2 className="settings-section-title">Personnalisation</h2>
+
+              <div className="settings-color-row">
+                <span className="settings-color-label">
+                  Couleur du fond d'écran
+                </span>
+                <input
+                  className="settings-color-picker"
+                  type="color"
+                  value={themeColors.bgColor}
+                  onChange={(e) => handleBgColorChange(e.target.value)}
+                />
+              </div>
+
+              <div className="settings-color-row">
+                <span className="settings-color-label">
+                  Couleur des barres de fenêtres
+                </span>
+                <input
+                  className="settings-color-picker"
+                  type="color"
+                  value={themeColors.titlebarColor}
+                  onChange={(e) => handleTitlebarColorChange(e.target.value)}
+                />
+              </div>
+
+              <button
+                className="settings-action-btn"
+                onClick={handleResetColors}
+              >
+                Réinitialiser les couleurs
+              </button>
             </div>
 
             {/* Session */}

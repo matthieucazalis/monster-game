@@ -50,11 +50,11 @@ export default function Login() {
 
   return (
     <div className="auth-wrap">
-      {/* Fenêtre de session Windows 98 */}
+      {/* Fenêtre de session */}
       <div className="auth-window">
         <div className="auth-titlebar">
           <span className="auth-titlebar-label">
-            Ouverture de session Windows
+            Connexion
           </span>
           <div className="auth-titlebar-btns">
             <button className="auth-win-btn">?</button>
