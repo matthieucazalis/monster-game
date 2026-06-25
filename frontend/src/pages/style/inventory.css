@@ -4,12 +4,6 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap");
 
-/* =========================================================
-   WIN98 TOKENS — voir src/pages/style/theme.css (--win-bg,
-   --win-accent, etc.) pour la déclaration centrale, surchargée
-   au runtime via JS sur <html> par src/utils/theme.ts.
-   Les tokens spécifiques à cette page restent ici.
-   ========================================================= */
 :root {
   --win-light: #dfdfdf;
   --win-dark: #808080;

@@ -13,7 +13,7 @@
   background: var(
     --win-bg,
     #008080
-  ); /* Vert canard officiel bureau Windows 98 */
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,7 +36,6 @@
     inset 1px 1px 0 #dfdfdf;
 }
 
-/* Barre de titre */
 .auth-titlebar {
   height: 24px;
   display: flex;
@@ -47,7 +46,7 @@
     to right,
     var(--win-accent, #000080),
     var(--win-accent2, #1084d0)
-  ); /* Dégradé bleu */
+  );
 }
 
 .auth-titlebar-label {
@@ -83,7 +82,6 @@
   padding: 1px 0 0 1px;
 }
 
-/* Corps de la boîte de dialogue */
 .auth-window-body {
   padding: 16px;
 }
@@ -145,7 +143,6 @@
   flex: 1;
 }
 
-/* Champs de saisie */
 .auth-field {
   margin-bottom: 12px;
 }
@@ -173,12 +170,10 @@
 }
 
 .auth-input:focus {
-  /* Bordure de focus en pointillés fine rétro */
   outline: 1px dotted #000000;
   outline-offset: -3px;
 }
 
-/* Navigation et Liens */
 .auth-nav-text {
   margin-top: 14px;
   font-size: 11px;
@@ -194,7 +189,6 @@
   color: #000080;
 }
 
-/* Messages d'erreur */
 .auth-error {
   font-size: 11px;
   font-weight: 700;
@@ -211,7 +205,7 @@
   flex-direction: column;
   gap: 8px;
   width: 95px;
-  padding-top: 18px; /* Aligné par rapport à la hauteur du premier input */
+  padding-top: 18px; 
 }
 
 .auth-btn {
@@ -232,7 +226,6 @@
   outline: none;
 }
 
-/* Le bouton par défaut (OK) possède une fine bordure noire d'activation */
 .auth-btn.default {
   font-weight: 700;
   border-color: #ffffff #000000 #000000 #ffffff;
@@ -243,7 +236,7 @@
 .auth-btn:active:not(:disabled) {
   border-color: #404040 #ffffff #ffffff #404040;
   box-shadow: none;
-  padding: 6px 0 4px 1px; /* Simulation d'enfoncement mécanique */
+  padding: 6px 0 4px 1px; 
 }
 
 .auth-btn:disabled {

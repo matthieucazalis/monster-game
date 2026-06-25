@@ -1,10 +1,9 @@
 /* ============================================================
-   SHOP — Windows 98 / SpaceHey
+   SHOP
    ============================================================ */
 
 .shop-wrap,
 .shop-wrap * {
-  /* Force l'écriture Sans-Serif standard et propre de ta navbar sur toute la page */
   font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
 }
 

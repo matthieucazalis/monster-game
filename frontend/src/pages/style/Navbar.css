@@ -1,5 +1,5 @@
 /* ============================================================
-   NAVBAR — Windows 98
+   NAVBAR
    Barre du haut simulant une taskbar
    ============================================================ */
 
@@ -19,7 +19,7 @@
 }
 
 /* ============================================================
-   NOUVEAU : Bloc monnaie — Coin gauche (Miroir des Settings)
+   Bloc monnaie — Coin gauche (Miroir des Settings)
    ============================================================ */
 .coins-badge {
   position: absolute;
@@ -42,14 +42,13 @@
     inset 1px 1px 0 var(--win-dark, #808080),
     inset -1px -1px 0 var(--win-light, #ffffff);
   box-sizing: border-box;
-  padding: 0 6px; /* Remise à plat propre du padding */
+  padding: 0 6px;
 }
 
 .coins-icon img {
   display: block;
 }
 
-/* Groupe de boutons central*/
 .navbar-center {
   display: flex;
   align-items: center;
@@ -61,7 +60,6 @@
     inset -1px -1px 0 var(--win-light, #ffffff);
 }
 
-/* Bouton de navigation */
 .navbar-item {
   display: flex;
   align-items: center;
@@ -87,7 +85,6 @@
   filter: brightness(1.05);
 }
 
-/* Bouton actif — enfoncé (bevel inversé) */
 .navbar-item.active {
   box-shadow:
     inset 1px 1px 0 var(--win-dark, #808080),
@@ -104,7 +101,6 @@
   flex-shrink: 0;
 }
 
-/* Bouton settings — coin droit */
 .navbar-settings {
   position: absolute;
   right: 16px;

@@ -8,12 +8,6 @@
 }
 
 /* ============================================================
-   WIN98 TOKENS — voir src/pages/style/theme.css (--win-bg,
-   --win-accent, etc.) pour la déclaration centrale, surchargée
-   au runtime via JS sur <html> par src/utils/theme.ts.
-   ============================================================ */
-
-/* ============================================================
    PAGE
    ============================================================ */
 .home-wrap {
