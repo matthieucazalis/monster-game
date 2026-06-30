@@ -270,7 +270,11 @@ const resetGame = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    // Supprime les monstres en cours, les monstres terminés et les décorations achetées
     await pool.query("DELETE FROM monsters WHERE user_id = ?", [user.id]);
+    await pool.query("DELETE FROM completed_monsters WHERE user_id = ?", [
+      user.id,
+    ]);
     await pool.query("DELETE FROM user_decorations WHERE user_id = ?", [
       user.id,
     ]);

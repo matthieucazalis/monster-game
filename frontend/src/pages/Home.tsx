@@ -41,11 +41,16 @@ export default function Home() {
   const [monster, setMonster] = useState<Monster | null>(null);
   const [allDecorations, setAllDecorations] = useState<Decoration[]>([]);
   const [user, setUser] = useState<User | null>(null);
+
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Popup de fin de monstre
+  const [completedMessage, setCompletedMessage] = useState<string | null>(null);
 
   const tutorialSteps = [
     {
@@ -145,7 +150,8 @@ export default function Home() {
 
       if (data.completed) {
         setMonster(null);
-        alert(data.message);
+
+        setCompletedMessage(data.message);
       } else {
         setMonster(data.monster);
       }
@@ -257,6 +263,29 @@ export default function Home() {
             </div>
           </div>
         </>
+      )}
+
+      {completedMessage && (
+        <div className="win98-alert-overlay">
+          <div className="win98-alert">
+            <div className="win98-alert-titlebar">
+              <span className="win98-alert-titlebar-label">Monster Game</span>
+            </div>
+            <div className="win98-alert-body">
+              <div className="win98-alert-icon">ℹ</div>
+              <p className="win98-alert-text">{completedMessage}</p>
+            </div>
+            <div className="win98-alert-footer">
+              <button
+                className="win98-alert-ok"
+                onClick={() => setCompletedMessage(null)}
+                autoFocus
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

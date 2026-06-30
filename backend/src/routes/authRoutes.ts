@@ -6,9 +6,9 @@ import {
   getMe,
   changeEmail,
   changePseudo,
+  changePassword,
   resetGame,
   deleteAccount,
-  changePassword,
 } from "../controllers/authController";
 import authenticate from "../middlewares/auth";
 
@@ -21,8 +21,8 @@ router.get("/me", authenticate, getMe);
 
 router.patch("/email", authenticate, changeEmail);
 router.patch("/username", authenticate, changePseudo);
+router.patch("/password", authenticate, changePassword);
 router.post("/reset", authenticate, resetGame);
 router.delete("/account", authenticate, deleteAccount);
-router.patch("/password", authenticate, changePassword);
 
 export default router;
