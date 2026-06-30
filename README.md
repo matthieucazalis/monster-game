@@ -48,3 +48,4 @@ pour finir, chaque petits monstres qui sont visibles dans ce projet, ont été c
 CODEURS : CAZALIS MAtthieu & BOURMAUD Simon
 ARTISTE : Mad.davvg101
 IMAGES AUTRE : Pinterest
+LAYOUT REFERENCE : SpaceHey
